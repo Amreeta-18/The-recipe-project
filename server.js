@@ -6,10 +6,13 @@ const mongoose = require('mongoose')
 
 // For inheriting the DB schema models, we should require the schema files in the models folder 
 require("./models/dbSchema.js")
-
+// Inheriting the user schema
+require("../models/users.js")
 // Once the schema file is loaded we need to instantiate the model using mongoose package like this
 var Data = mongoose.model("data") //check for this "data" variable in /models/dbSchema.js then u can understand
 
+var User = mongoose.model("user");
+;
 
 //MongoDB configuration 
 const MONGOURI = "mongodb://recipeAdmin:recipe123@ds233571.mlab.com:33571/recipedb"
