@@ -66,7 +66,7 @@ function Nav() {
           color: var(--c-brown);
           text-decoration: none;
         }
-        
+
         .login-btn {
           height: 30px;
           width: 80px;
