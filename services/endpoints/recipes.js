@@ -90,20 +90,4 @@ router.route('/:id').get(async (req, res) => {
   }
 })
 
-router.route('recipes/popular').get(async (req, res) => {
-  
-  try {
-    // get recipe info
-    const rawResult = await pgConn.query(`SELECT * FROM recipes ORDER BY spoonacularScore DESC LIMIT 12;`)
-    
-    return res.send({
-      ok: true,
-      result: rawResult,
-    })
-  }
-  catch(err) {
-    logError(500, 'Exception occurs in recipes/popular endpoint.', err)
-  }
-})
-
 module.exports = router
