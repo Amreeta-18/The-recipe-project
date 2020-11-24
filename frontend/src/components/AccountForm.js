@@ -13,7 +13,7 @@ function AccountForm({onSubmit, paramErrors, buttonText, email, setEmail, passwo
   }
 
   return (
-    <div class = "container">
+    <div className='container'>
       <form onSubmit={onSubmit}>
         {/* FormField is only for error message displaying, don't need to style it now */}
         <FormField errorMsg={paramErrors?.email[0]?.message}>

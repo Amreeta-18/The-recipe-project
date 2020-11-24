@@ -37,9 +37,7 @@ function SearchResult({location}) {
       }),
     })
       .then(res => res.json())
-      .then(data => {
-        console.log(data)
-        setRecipes(data.results)})
+      .then(data => setRecipes(data.results))
       .catch(e => console.log(e))
   }
 

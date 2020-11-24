@@ -78,7 +78,7 @@ function FavoriteImg({hasFavorited, userId, recipeId, refresh, width, height}) {
             cursor: pointer;
           }
         `}
-        </style>  
+        </style>
     </>
   )
 }

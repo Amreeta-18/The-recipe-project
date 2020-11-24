@@ -5,6 +5,7 @@ import Landing from './views/Landing.js'
 import SearchResult from './views/SearchResult'
 import SingleRecipeView from './views/SingleRecipeView'
 import LoginAndRegister from './views/LoginAndRegister'
+import PersonalPage from './views/PersonalPage'
 import UserContext from './components/UserContext'
 import {BrowserRouter as Router, Route} from 'react-router-dom'
 import './App.css'
@@ -18,6 +19,7 @@ function App() {
         <Route path='/result' component={SearchResult} />
         <Route path='/recipes/:id' component={SingleRecipeView} />
         <Route path='/login' component={LoginAndRegister} />
+        <Route path='/personal' component={PersonalPage} />
         <Footer />
       </UserContext>
     </Router>

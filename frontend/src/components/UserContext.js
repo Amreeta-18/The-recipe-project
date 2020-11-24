@@ -19,8 +19,6 @@ function UserContext({children}) {
     const name = userInfo.last_name || userInfo.email.split('@')[0]
     setIsLoggedIn(true)
     setUserName(name)
-    console.log(userInfo.id)
-    console.log(typeof(userInfo.id))
     setUserId(userInfo.id)
     localStorage.setItem('accessToken', JSON.stringify(userInfo))
   }

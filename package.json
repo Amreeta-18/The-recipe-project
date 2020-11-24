@@ -24,6 +24,7 @@
   "homepage": "https://github.com/NSR9/CS561#readme",
   "dependencies": {
     "@reach/dialog": "^0.11.2",
+    "@reach/tabs": "^0.11.2",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "db-migrate": "^0.11.11",
