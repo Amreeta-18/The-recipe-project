@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+const validate = require('../validation')
 
 // Body Parser Middleware
 const bodyParser = require('body-parser')
@@ -37,9 +38,24 @@ router.route('/findByIngredients').all(jsonParser).post(async (req, res) => {
       ORDER BY total ASC
       `, [ingredientIds])
     if(!results.rows[0]) return endpointError(res, 400, 'BadRequest', 'Incorrect email or password.')
+
+    // if user is logged in, find all their favorited recipes and add into the result
+    const userId = req.body.userId
+    const userFavorites = await pgConn.query(`SELECT * FROM favorite_recipes WHERE user_id = $1;`, [userId])
+    const favoriteRecords = {}
+    // turn the result array into object so that later we can search connection by recipe id
+    userFavorites.rows.forEach(favorite => favoriteRecords[favorite.recipe_id] = true)
+
+    const finalResult = results.rows.map(result => {
+      return {
+        ...result,
+        favoritedByCurrentUser:favoriteRecords[result.id] ? true : false
+      }
+    })
+
     return res.send({
       ok: true,
-      results: results.rows,
+      results: finalResult,
     })
   }
   catch(err) {
@@ -49,13 +65,17 @@ router.route('/findByIngredients').all(jsonParser).post(async (req, res) => {
   }
 })
 
-router.route('/:id').get(async (req, res) => {
+router.route('/:id').all(jsonParser).post(async (req, res) => {
   const recipeId = req.params.id
   try {
     // get recipe info
     const rawResult = await pgConn.query(`SELECT * FROM recipes WHERE id = $1;`,[recipeId])
     const parsedInstruction = JSON.parse(rawResult.rows[0].instructions)
     const parsedNutrition = JSON.parse(rawResult.rows[0].nutrition)
+
+    // get user id and check have this user favorited this recipe or not
+    const userId = req.body.userId
+    const hasFavorited = await pgConn.query(`SELECT * FROM favorite_recipes WHERE user_id = $1 AND recipe_id = $2;`, [userId, recipeId])
 
     // get related ingredients
     const rawIngredients = await pgConn.query(`
@@ -78,6 +98,7 @@ router.route('/:id').get(async (req, res) => {
       instructions: parsedInstruction,
       nutrition: parsedNutrition,
       ingredients: parsedIngredients,
+      favoritedByCurrentUser: hasFavorited.rows[0] ? true : false,
     }
     return res.send({
       ok: true,

@@ -1,4 +1,5 @@
 @import url('./styles/menu-button.css');
+@import url('./styles/dialog.css');
 
 :root {
   --c-brown: #B68933;

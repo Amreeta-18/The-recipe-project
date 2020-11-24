@@ -1,18 +1,20 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import SearchBar from '../components/SearchBar'
+import FavoriteImg from '../components/FavoriteImg'
 import {config} from '../lib/config'
 import {useHistory} from 'react-router-dom'
+import {UserInfo} from '../components/UserContext'
 // icons
 import TitleIcon from '../images/pg3_recipename.svg'
 import NutritionIcon from '../images/pg3_nutritionfacts.png'
 import CalIcon from '../images/pg3_calorie.svg'
 import YieldIcon from '../images/pg3_yield.svg'
 import TimeIcon from '../images/pg3_time.svg'
-import LikeIcon from '../images/like.svg'
 const urlJoin = require('url-join')
 
 function SingleRecipeView({match}) {
   const history = useHistory()
+  const userInfo = useContext(UserInfo)
   const [queryString, setQueryString] = useState()
   const [recipe, setRecipe] = useState()
   const displayedNutrients = [
@@ -25,14 +27,19 @@ function SingleRecipeView({match}) {
 
   const fetchOneRecipe = async () => {
     const recipeId = match.params.id
+    console.log(userInfo)
     fetch(urlJoin(config.sous.apiUrl, `/recipes/${recipeId}`), {
-      method: 'GET',
+      method: 'POST',
       headers: {
         'content-type': 'application/json',
       },
+      body: JSON.stringify({
+        userId: userInfo.info.id,
+      }),
     })
       .then(res => res.json())
       .then(data => {
+        console.log(data)
         if(data.ok) setRecipe(data.result)
       })
   }
@@ -47,6 +54,25 @@ function SingleRecipeView({match}) {
     history.push({pathname: `/result`, state: {queryString: queryString}})
   }
 
+  const handleFavorite = (recipeId) => {
+    if(userInfo?.isLoggedIn) {
+      fetch(urlJoin(config.sous.apiUrl, 'users', 'favorite'), {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+          'accept': 'application/json',
+        },
+        body: JSON.stringify({
+          userId: userInfo.info.id,
+          recipeId: recipeId,
+        }),
+      })
+        .catch(e => console.log(e))
+      // get the recipe info again to change the color of the heart when the user favorites the recipe successfully
+      fetchOneRecipe()  
+    }
+  }
+
   return (
     <div>
       <div className='searchbar-container'>
@@ -58,7 +84,14 @@ function SingleRecipeView({match}) {
           <div className='row'>
             <div>
               <img src={recipe.imgurl} alt={recipe.name} className='recipe-img' id='test_single_recipe_image'/><br />
-              <img src={LikeIcon} alt='like icon' />
+              <FavoriteImg
+                hasFavorited={recipe.favoritedByCurrentUser}
+                userId={userInfo.info.id}
+                recipeId={recipe.id}
+                refresh={fetchOneRecipe}
+                width={30}
+                height={30}
+              />
             </div>
             <div>
               <div className='row'>
