@@ -49,6 +49,22 @@ router.route('/findByIngredients').all(jsonParser).post(async (req, res) => {
   }
 })
 
+router.route('/popular').get(async (req, res) => {
+  
+  try {
+    // get recipe info
+    const rawResult = await pgConn.query(`SELECT id, name, imgurl FROM recipes ORDER BY spoonacular_score DESC LIMIT 12;`)
+    
+    return res.send({
+      ok: true,
+      result: rawResult.rows,
+    })
+  }
+  catch(err) {
+    logError(500, 'Exception occurs in recipes/popular endpoint.', err)
+  }
+})
+
 router.route('/:id').get(async (req, res) => {
   const recipeId = req.params.id
   try {
@@ -90,20 +106,6 @@ router.route('/:id').get(async (req, res) => {
   }
 })
 
-router.route('recipes/popular').get(async (req, res) => {
-  
-  try {
-    // get recipe info
-    const rawResult = await pgConn.query(`SELECT * FROM recipes ORDER BY spoonacularScore DESC LIMIT 12;`)
-    
-    return res.send({
-      ok: true,
-      result: rawResult,
-    })
-  }
-  catch(err) {
-    logError(500, 'Exception occurs in recipes/popular endpoint.', err)
-  }
-})
+
 
 module.exports = router
