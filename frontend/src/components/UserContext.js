@@ -6,8 +6,10 @@ function UserContext({children}) {
   // user is not logged in by default
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [userName, setUserName] = useState()
+  const [userId, setUserId] = useState()
   
   const info = {
+    id: userId,
     userName: userName,
   }
 
@@ -17,14 +19,14 @@ function UserContext({children}) {
     const name = userInfo.last_name || userInfo.email.split('@')[0]
     setIsLoggedIn(true)
     setUserName(name)
-    // prevent storing password to local storage
-    if(userInfo.password) delete userInfo['password']
+    setUserId(userInfo.id)
     localStorage.setItem('accessToken', JSON.stringify(userInfo))
   }
   
   const userLogOut = () => {
     setIsLoggedIn(false)
     setUserName('')
+    setUserId(null)
     localStorage.removeItem('accessToken')
   }
 
