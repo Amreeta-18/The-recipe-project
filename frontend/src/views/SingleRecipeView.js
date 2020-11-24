@@ -27,7 +27,6 @@ function SingleRecipeView({match}) {
 
   const fetchOneRecipe = async () => {
     const recipeId = match.params.id
-    console.log(userInfo)
     fetch(urlJoin(config.sous.apiUrl, `/recipes/${recipeId}`), {
       method: 'POST',
       headers: {
@@ -39,7 +38,6 @@ function SingleRecipeView({match}) {
     })
       .then(res => res.json())
       .then(data => {
-        console.log(data)
         if(data.ok) setRecipe(data.result)
       })
   }
