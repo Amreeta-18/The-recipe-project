@@ -23,7 +23,6 @@ function SearchResult({location}) {
 
   const fetchRecipes = async () => {
     setPageNum(1)
-    console.log(userInfo)
     const queryIngredients = queryString.replace(', ', ',').split(',')
     fetch(urlJoin(config.sous.apiUrl, 'recipes', 'findByIngredients'), {
       method: 'POST',
@@ -37,9 +36,7 @@ function SearchResult({location}) {
       }),
     })
       .then(res => res.json())
-      .then(data => {
-        console.log(data)
-        setRecipes(data.results)})
+      .then(data => setRecipes(data.results))
       .catch(e => console.log(e))
   }
 
@@ -87,7 +84,6 @@ function SearchResult({location}) {
       {/* we need "recipes &&" to not show anything since recipes will recieve data later (in useEffect) */}
       
       <div className='result-wrapper'>
-        {console.log(pageRecipes)}
         {pageRecipes && pageRecipes.map(recipe => <RecipeCard recipe={recipe} key={recipe.id} fetchRecipes={fetchRecipes} />)}
       </div>
     
