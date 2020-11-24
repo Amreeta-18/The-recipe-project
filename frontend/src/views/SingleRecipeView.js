@@ -52,25 +52,6 @@ function SingleRecipeView({match}) {
     history.push({pathname: `/result`, state: {queryString: queryString}})
   }
 
-  const handleFavorite = (recipeId) => {
-    if(userInfo?.isLoggedIn) {
-      fetch(urlJoin(config.sous.apiUrl, 'users', 'favorite'), {
-        method: 'POST',
-        headers: {
-          'content-type': 'application/json',
-          'accept': 'application/json',
-        },
-        body: JSON.stringify({
-          userId: userInfo.info.id,
-          recipeId: recipeId,
-        }),
-      })
-        .catch(e => console.log(e))
-      // get the recipe info again to change the color of the heart when the user favorites the recipe successfully
-      fetchOneRecipe()  
-    }
-  }
-
   return (
     <div>
       <div className='searchbar-container'>
