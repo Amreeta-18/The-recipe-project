@@ -72,7 +72,7 @@ function LoginAndRegister() {
       .then(result => {
         if(result.ok) {
           // set user info to localstorage
-          userInfo.userLogIn({email: registerEmail})
+          userInfo.userLogIn(result.userInfo)
           history.push('/')
         }
         else {

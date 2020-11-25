@@ -1,18 +1,20 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import SearchBar from '../components/SearchBar'
+import FavoriteImg from '../components/FavoriteImg'
 import {config} from '../lib/config'
 import {useHistory} from 'react-router-dom'
+import {UserInfo} from '../components/UserContext'
 // icons
 import TitleIcon from '../images/pg3_recipename.svg'
 import NutritionIcon from '../images/pg3_nutritionfacts.png'
 import CalIcon from '../images/pg3_calorie.svg'
 import YieldIcon from '../images/pg3_yield.svg'
 import TimeIcon from '../images/pg3_time.svg'
-import LikeIcon from '../images/like.svg'
 const urlJoin = require('url-join')
 
 function SingleRecipeView({match}) {
   const history = useHistory()
+  const userInfo = useContext(UserInfo)
   const [queryString, setQueryString] = useState()
   const [recipe, setRecipe] = useState()
   const displayedNutrients = [
@@ -26,10 +28,13 @@ function SingleRecipeView({match}) {
   const fetchOneRecipe = async () => {
     const recipeId = match.params.id
     fetch(urlJoin(config.sous.apiUrl, `/recipes/${recipeId}`), {
-      method: 'GET',
+      method: 'POST',
       headers: {
         'content-type': 'application/json',
       },
+      body: JSON.stringify({
+        userId: userInfo.info.id,
+      }),
     })
       .then(res => res.json())
       .then(data => {
@@ -58,7 +63,14 @@ function SingleRecipeView({match}) {
           <div className='row'>
             <div>
               <img src={recipe.imgurl} alt={recipe.name} className='recipe-img' id='test_single_recipe_image'/><br />
-              <img src={LikeIcon} alt='like icon' />
+              <FavoriteImg
+                hasFavorited={recipe.favoritedByCurrentUser}
+                userId={userInfo.info.id}
+                recipeId={recipe.id}
+                refresh={fetchOneRecipe}
+                width={30}
+                height={30}
+              />
             </div>
             <div>
               <div className='row'>
@@ -75,18 +87,25 @@ function SingleRecipeView({match}) {
                   {/* only list the nutritions that we want to show to users */}
                   {recipe.nutrition.map(nutruent => {
                     if(displayedNutrients.includes(nutruent.title)) {
-                      return <p key={nutruent.title} className='header-content' id='test_single_recipe_nutrients'>{nutruent.title} {nutruent.amount}{nutruent.unit} {nutruent.percentOfDailyNeeds}% DV</p>
+                      return <p 
+                        key={nutruent.title} 
+                        className='header-container' 
+                        id='test_single_recipe_nutrients'>
+                          <div className='header-content'>{nutruent.title} {nutruent.amount}{nutruent.unit} </div>
+                          <div className='header-content'>{nutruent.percentOfDailyNeeds}% DV</div>
+                        </p>
                     }
                     else return null
                   })}
+                  <p className='daily-value'>*Percent Daily Values are based on a 2,000 calorie diet. </p>
                   <div className='row recipe-misc-container'>
                     {/* calories */}
                     <div className='row recipe-misc'>
                       <img src={CalIcon} alt='calorie icon' />
                       <div>
                         <p className='header-sub-title'>CALORIES:</p>
-                        <p className='misc-content' id='test_single_recipe_calories'>{recipe.nutrition[0].amount} calories</p>
-                        <p className='misc-content'>per serving</p>
+                        <p className='misc-content' id='test_single_recipe_calories'>{recipe.nutrition[0].amount} Calories</p>
+                        <p className='misc-content'>Per Serving</p>
                       </div>
                     </div>
                     {/* yield */}
@@ -102,7 +121,7 @@ function SingleRecipeView({match}) {
                       <img src={TimeIcon} alt='time icon' />
                       <div>
                         <p className='header-sub-title'>TIMING:</p>
-                        <p className='misc-content' id='test_single_recipe_cook_time'>{recipe.ready_in_minutes} mins</p>
+                        <p className='misc-content' id='test_single_recipe_cook_time'>{recipe.ready_in_minutes} Minutes</p>
                       </div>
                     </div>
                   </div>
@@ -117,7 +136,7 @@ function SingleRecipeView({match}) {
                 return (
                   <div key={idx + 1}>
                     <p className='body-text'>Step {idx + 1}</p>
-                    <p className='instruction-step body-text' id='test_single_recipe_instructions'>{instruction.step}</p>
+                    <p className='instruction-step' id='test_single_recipe_instructions'>{instruction.step}</p>
                   </div>
                 )
               })}
@@ -145,11 +164,17 @@ function SingleRecipeView({match}) {
 
         .stripe {
           width: 100%;
-          height: 300px;
+          height: 460px;
           background-color: var(--c-light-brown);
           position: absolute;
           z-index: -1;
           opacity: 0.6;
+        }
+
+        .daily-value {
+          font-family: Shanti;
+          font-size: 13px;
+          color: #584E4E;
         }
 
         .recipe-container {
@@ -195,11 +220,15 @@ function SingleRecipeView({match}) {
           font-weight: bold;
         }
 
+        .header-container {
+          display: grid;
+          grid-template-columns: 200px auto;
+        }
+
         .header-content {
           font-family: Shanti;
           font-size: 15px;
           color: #584E4E;
-          margin: 10px 0px;
         }
 
         .recipe-misc-container {
@@ -237,16 +266,23 @@ function SingleRecipeView({match}) {
         .ingredient-container {
           width: 18%;
         }
-
-        .body-text {
+        .ingredient-text{
           font-family: Shanti;
           font-size: 20px;
           color: #584E4E;
         }
 
+        .body-text {
+          font-family: Shanti;
+          font-size: 20px;
+          color: #584E4E;
+          font-weight: bold;
+        }
+
         .instruction-step {
           margin-top: 35px;
           margin-bottom: 60px;
+          font-size: 20px;
         }
 
         .sticky {

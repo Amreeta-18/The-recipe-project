@@ -1,9 +1,9 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import SearchBar from '../components/SearchBar'
+import RecipeCard from '../components/RecipeCard'
 import {config} from '../lib/config'
+import {UserInfo} from '../components/UserContext'
 import 'react-responsive-carousel/lib/styles/carousel.min.css'
-import {Link} from 'react-router-dom'
-import LikeIcon from '../images/like.svg'
 const urlJoin = require('url-join')
 
 function SearchResult({location}) {
@@ -13,7 +13,7 @@ function SearchResult({location}) {
   const [resultPerPage] = useState(6) // The number of results to show on a "page"
   const [pageNum, setPageNum] = useState(1) // The current page number, in terms of what group of results are shown
   const [pageRecipes, setPageRecipes] = useState() // Array of recipes shown in quantity of resultPerPage
-
+  const userInfo = useContext(UserInfo)
 
   const submitHandler = (e) => {
     e.preventDefault()
@@ -32,6 +32,7 @@ function SearchResult({location}) {
       },
       body: JSON.stringify({
         queryIngredients: queryIngredients,
+        userId: userInfo.info.id,
       }),
     })
       .then(res => res.json())
@@ -47,7 +48,7 @@ function SearchResult({location}) {
 
   useEffect(() => {
     fetchRecipes()
-  }, [])
+  }, [userInfo])
 
   // After recipes or pageNum are changed, get the correct group of recipes to show
   useEffect(() => {
@@ -83,23 +84,7 @@ function SearchResult({location}) {
       {/* we need "recipes &&" to not show anything since recipes will recieve data later (in useEffect) */}
       
       <div className='result-wrapper'>
-        {pageRecipes && pageRecipes.map(recipe => {
-          return (
-            <div className='form-recipe' key={recipe.id}>
-              <div className='recipe-card' id='test_search_result_recipe_card'>
-                <Link to={`/recipes/${recipe.id}`}>
-                  <div>
-                    <img src={recipe.imgurl} className='recipe-img' id='test_search_result_recipe_image' alt={recipe.name} />
-                    <div className='reicpe-text'>
-                      <p className='recipe-name' id='test_search_result_recipe_title'> {recipe.name}</p>
-                      <img src={LikeIcon} alt='like icon' className='like-icon' id='test_search_result_recipe_like'/>
-                    </div>
-                  </div>
-                </Link>
-              </div>
-            </div>
-          )
-        })}
+        {pageRecipes && pageRecipes.map(recipe => <RecipeCard recipe={recipe} key={recipe.id} fetchRecipes={fetchRecipes} />)}
       </div>
     
       <div className='button-container'>
@@ -158,51 +143,6 @@ function SearchResult({location}) {
         .nav-button:hover {
           background-color: var(--c-brown);
           color: white;
-        }
-
-        .container-fluid{
-          padding: 50px;
-          align: center;
-        }
-
-      .form-recipe {
-          max-width:100%;
-          //disply:flex;
-          justify-content: center;
-        }
-
-        .recipe-card {
-          padding: 15px;
-          background-color: white;
-          max-height: 250px;
-          max-width: 240px;
-          justify-content:center;
-          border-radius: 15px;
-          margin-bottom: 20px;
-          margin-left: auto;
-          margin-right: auto;
-        }
-
-        .recipe-img {
-          max-width: 100%;
-          align: center;
-          border-radius: 10px;
-        }
-
-        .reicpe-text {
-          display: flex;
-          justify-content: space-between;
-        }
-
-        .recipe-name {
-          margin: 0px;
-          font-family: Sedan;
-          color: rgba(108, 108, 108, 1);
-          font-size: 15px;
-        }
-
-        .like-icon {
-          width: 20px;
         }
         `}
       </style>
