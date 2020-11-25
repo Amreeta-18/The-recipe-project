@@ -21,7 +21,6 @@ function PersonalFavorite() {
     })
       .then(res => res.json())
       .then(data => {
-        console.log(data)
         setFavoriteRecipes(data.results)})
       .catch(e => console.log(e))
   }
