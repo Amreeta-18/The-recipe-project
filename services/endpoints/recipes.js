@@ -65,6 +65,21 @@ router.route('/findByIngredients').all(jsonParser).post(async (req, res) => {
   }
 })
 
+router.route('/popular').get(async (req, res) => {
+  try {
+    // get recipe info
+    const rawResults = await pgConn.query(`SELECT id, name, imgurl FROM recipes ORDER BY spoonacular_score DESC LIMIT 12;`)
+    return res.send({
+      ok: true,
+      results: rawResults.rows,
+    })
+  }
+  catch(err) {
+    logError(500, 'Exception occurs in endpoint while trying to read popular recipes.', err)
+    return endpointError(res, 500, 'InternalServerError', 'Something went wrong and popular recipes could not be read.')
+  }
+})
+
 router.route('/:id').all(jsonParser).post(async (req, res) => {
   const recipeId = req.params.id
   try {
