@@ -1,10 +1,12 @@
-import React, {useState, useEffect} from 'react'
-import RecipeCard from './RecipeCard'
+import React, {useState, useEffect, useContext} from 'react'
+import RecipeCard from '../components/RecipeCard'
+import {UserInfo} from '../components/UserContext'
 import {config} from '../lib/config'
 const urlJoin = require('url-join')
 
-function PersonalFavorite({userId}) {
+function PersonalFavorite() {
   const [favoriteRecipes, setFavoriteRecipes] = useState([])
+  const userInfo = useContext(UserInfo)
 
   const getPersonalFavorites = async () => {
     fetch(urlJoin(config.sous.apiUrl, 'users', 'personalFavorites'), {
@@ -14,7 +16,7 @@ function PersonalFavorite({userId}) {
         'accept': 'application/json',
       },
       body: JSON.stringify({
-        userId: userId,
+        userId: userInfo.info.id,
       }),
     })
       .then(res => res.json())
@@ -26,11 +28,11 @@ function PersonalFavorite({userId}) {
   
   useEffect(() => {
     getPersonalFavorites()
-  }, [userId])
+  }, [userInfo])
 
   return (
-    <div>
-      <h1>FAVORITE RECIPES</h1>
+    <div className='content-container'>
+      <span>FAVORITE RECIPES</span>
       <div className='recipe-container'>
         {favoriteRecipes[0]
           ? favoriteRecipes.map(recipe => <RecipeCard recipe={recipe} key={recipe.id} fetchRecipes={getPersonalFavorites} />)

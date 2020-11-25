@@ -13,7 +13,9 @@ function Nav() {
   
   // the content of the dropdown menu, only contains string and function
   const dropdownMenuContent = [
-    ['Setting', () => history.push({pathname: `/personal`})],
+    ['Settings', () => history.push({pathname: `/settings`})],
+    ['Favorites', () => history.push({pathname: `/favorite-recipes`})],
+    ['Ingredients', () => history.push({pathname: `/ingredients`})],
     ['Log out', userInfo.userLogOut],
   ]
 

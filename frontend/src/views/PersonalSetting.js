@@ -2,13 +2,14 @@ import React from 'react'
 
 function PersonalSetting() {
 
-  const onSubmit = (params) => {
+  const onSubmit = (e) => {
+    e.preventDefault()
     console.log('submit something')
   }
   
   return (
-    <div>
-      <h1>ABOUT ME</h1>
+    <div className='content-container'>
+      <span>ABOUT ME</span>
       <form onSubmit={onSubmit}>
         <div className='form-field-container'>
           <div>
