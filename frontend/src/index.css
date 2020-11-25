@@ -35,3 +35,7 @@ a {
 .row {
   display: flex;
 }
+
+.content-container {
+  height: calc(100vh - 190px);
+}

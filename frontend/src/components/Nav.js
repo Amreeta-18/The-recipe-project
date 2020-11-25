@@ -3,19 +3,26 @@ import Logo from '../images/logo_pg1.svg'
 import {useLocation, Link} from 'react-router-dom'
 import {UserInfo} from './UserContext'
 import DropdownMenu from './DropdownMenu'
+import {useHistory} from 'react-router-dom'
 
 function Nav() {
   const [showButton, setShowButton] = useState(true)
   const location = useLocation()
   const userInfo = useContext(UserInfo)
+  const history = useHistory()
+  
   // the content of the dropdown menu, only contains string and function
   const dropdownMenuContent = [
+    ['Settings', () => history.push({pathname: `/settings`})],
+    ['Favorites', () => history.push({pathname: `/favorite-recipes`})],
+    ['Ingredients', () => history.push({pathname: `/ingredients`})],
     ['Log out', userInfo.userLogOut],
   ]
 
   // hide login button if user's in the login page
+  const pathsToHide = ['/login', '/personal']
   useEffect(() => {
-    if(location.pathname === '/login') setShowButton(false)
+    if(pathsToHide.includes(location.pathname)) setShowButton(false)
     else setShowButton(true)
   }, [location])
 

@@ -103,4 +103,34 @@ router.route('/favorite').all(jsonParser).post(async (req, res) => {
   }
 })
 
+router.route('/personalFavorites').all(jsonParser).post(async (req, res) => {
+  try {
+    const userId = req.body.userId
+    const rawResults = await pgConn.query(`
+      SELECT recipes.id,
+             recipes.name,
+             recipes.imgurl
+      FROM favorite_recipes AS fr
+      JOIN recipes ON recipes.id = fr.recipe_id
+      WHERE user_id = $1
+      ORDER BY fr.created_at DESC;`
+      , [userId])
+    const favoriteRecipes = rawResults.rows.map(recipe => {
+      return {
+        ...recipe,
+        favoritedByCurrentUser: true,
+      }
+    })
+    return res.send({
+      ok: true,
+      results: favoriteRecipes,
+    })
+  }
+  catch(err) {
+    // unexpected errors
+    logError(500, 'Exception occurs in endpoint while user trying to favorite a recipe', err)
+    return endpointError(res, 500, 'InternalServerError', 'Something went wrong and the recipe could not be added to the favorite list of the user.')
+  }
+})
+
 module.exports = router
