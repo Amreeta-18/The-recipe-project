@@ -36,12 +36,12 @@ exports.up = function(db, callback) {
         mapping: 'id'
       }
     },
-    ingredients_id: {
+    recipe_id: {
       type: 'int',
       notNull: true,
       foreignKey: {
-        name: 'ingredient_id',
-        table: 'ingredients',
+        name: 'recipe_id',
+        table: 'recipes',
         rules: {
           onDelete: 'CASCADE',
           onUpdate: 'RESTRICT'
@@ -58,7 +58,7 @@ exports.up = function(db, callback) {
 }
 
 exports.down = function(db, callback) {
-  db.dropTable('staple_ingredients', callback)
+  db.dropTable('favorite_recipes', callback)
 }
 
 exports._meta = {
