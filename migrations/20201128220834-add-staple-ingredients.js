@@ -15,9 +15,9 @@ exports.setup = function(options, seedLink) {
 }
 
 exports.up = function(db, callback) {
-  console.log('Building tables...')
+  console.log('Building table...')
   
-  db.createTable('favorite_recipes', {
+  db.createTable('staple_ingredients', {
     id: {
       type: 'int',
       primaryKey: true,
@@ -36,7 +36,7 @@ exports.up = function(db, callback) {
         mapping: 'id'
       }
     },
-    ingredients_id: {
+    ingredient_id: {
       type: 'int',
       notNull: true,
       foreignKey: {
@@ -54,7 +54,7 @@ exports.up = function(db, callback) {
       notNull: true,
     },
   }, callback)
-  console.log('favorite_recipes table built successfully')
+  console.log('staple_ingredients table built successfully')
 }
 
 exports.down = function(db, callback) {
@@ -64,33 +64,3 @@ exports.down = function(db, callback) {
 exports._meta = {
   "version": 1
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
