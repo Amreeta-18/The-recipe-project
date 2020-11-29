@@ -133,4 +133,30 @@ router.route('/personalFavorites').all(jsonParser).post(async (req, res) => {
   }
 })
 
+router.route('/stapleIngredientList'.all(jsonParser).post(async (req, res) => {
+  try {
+    const userId = req.body.userId
+    const rawResults = await pgConn.query(`
+      SELECT (
+               staple_ingredients.ingredient_id
+      
+      FROM staple_ingredients AS si
+      JOIN ingredients ON ingredients.id = si.ingredient_id
+      WHERE user_id = $1`
+      , [userId])
+ ;
+    return res.send({
+      ok: true,
+      results: rawResults,
+    })
+  }
+  catch(err) {
+    // unexpected errors
+    logError(500, 'Exception occurs in endpoint while user trying to fetch staple ingredients', err)
+    return endpointError(res, 500, 'InternalServerError', 'Something went wrong fetch call of staple ingredients and we could not provide the staple ingredients of the user.')
+  }
+})
+)
+
+
 module.exports = router
