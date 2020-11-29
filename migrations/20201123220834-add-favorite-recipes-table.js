@@ -64,34 +64,3 @@ exports.down = function(db, callback) {
 exports._meta = {
   "version": 1
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
