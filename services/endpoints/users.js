@@ -28,7 +28,12 @@ router.route('/login').all(jsonParser).post(async (req, res) => {
     if(!result.rows[0]) return endpointError(res, 400, 'BadRequest', 'Incorrect email or password.')
     return res.send({
       ok: true,
-      userInfo: result.rows[0],
+      userInfo: {
+        id: result.rows[0].id,
+        email: result.rows[0].email,
+        firstName: result.rows[0].first_name,
+        lastName: result.rows[0].last_name,
+      }
     })
   }
   catch(err) {
@@ -60,7 +65,12 @@ router.route('/register').all(jsonParser).post(async (req, res) => {
     const newUserInfo = await pgConn.query(`INSERT INTO users (email, password, created_at) VALUES ($1, $2, $3) RETURNING id, email, first_name, last_name, created_at, modified_at;`, [userInfo.email, userInfo.password, now])
     return res.send({
       ok: true,
-      userInfo: newUserInfo.rows[0],
+      userInfo: {
+        id: newUserInfo.rows[0].id,
+        email: newUserInfo.rows[0].email,
+        firstName: newUserInfo.rows[0].first_name,
+        lastName: newUserInfo.rows[0].last_name,
+      },
     })
   }
   catch(err) {
@@ -130,6 +140,57 @@ router.route('/personalFavorites').all(jsonParser).post(async (req, res) => {
     // unexpected errors
     logError(500, 'Exception occurs in endpoint while user trying to favorite a recipe', err)
     return endpointError(res, 500, 'InternalServerError', 'Something went wrong and the recipe could not be added to the favorite list of the user.')
+  }
+})
+
+router.route('/update').all(jsonParser).post(async (req, res) => {
+  const validationDefinition = {
+    email: [
+      validate.notEmpty,
+      validate.addCondition(validate.uniqueEmail, req.body.userInfo.id),
+      validate.validEmailFormat,
+    ],
+    password: [
+      validate.noSpace,
+    ],
+  }
+  
+  const errorMsg = await validate.run(validationDefinition, req.body.userInfo)
+  if (errorMsg) return res.status(400).json(errorMsg)
+
+  try {
+    const userInfo = req.body.userInfo
+    const queryParams = [userInfo.email, userInfo.firstName, userInfo.lastName, userInfo.id]
+
+    // since we didn't store user's password, users can't see it on the frontend
+    // so only update the password when the user really change it (type something in the password field)
+    const updatePassword = userInfo.password ? 'password = $5,' : ''
+    if(userInfo.password) queryParams.push(userInfo.password)
+
+    const updateResult = await pgConn.query(`
+      UPDATE users
+      SET email = $1,
+          ${updatePassword}
+          first_name = $2,
+          last_name = $3,
+          modified_at = NOW()
+      WHERE id = $4
+      RETURNING id, email, first_name, last_name, created_at, modified_at;`
+      , queryParams)
+    return res.send({
+      ok: true,
+      userInfo: {
+        id: updateResult.rows[0].id,
+        email: updateResult.rows[0].email,
+        firstName: updateResult.rows[0].first_name,
+        lastName: updateResult.rows[0].last_name,
+      },
+    })
+  }
+  catch(err) {
+    // unexpected errors
+    logError(500, 'Exception occurs in endpoint while user trying to update their personal information', err)
+    return endpointError(res, 500, 'InternalServerError', 'Something went wrong and the personal information could not be updated by the user.')
   }
 })
 
