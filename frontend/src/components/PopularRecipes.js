@@ -21,7 +21,7 @@ function PopularRecipes() {
 
 	useEffect(() => {
 		fetchPopular()
-	  }, [])
+	}, [])
 
 	return(
 		<div>
