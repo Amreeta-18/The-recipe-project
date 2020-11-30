@@ -41,6 +41,7 @@ function Landing() {
         {`
         .landing-container {
           margin: 0px;
+          background: rgba(252, 209, 127, 0.26);
         }
         .search-container {
           width: 100vw;
