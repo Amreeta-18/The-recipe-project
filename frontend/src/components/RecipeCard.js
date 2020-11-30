@@ -56,6 +56,7 @@ function RecipeCard({recipe, fetchRecipes}) {
         .reicpe-text {
           display: flex;
           justify-content: space-between;
+          min-height: 40px;
         }
 
         .recipe-name {
