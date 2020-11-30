@@ -13,8 +13,8 @@ const isInt = (value) => {
     : Promise.resolve({code: 'not-number', message: 'Please provide a number.'})
 }
 
-const uniqueEmail = async (value) => {
-  const result = await pgConn.query('SELECT 1 FROM users WHERE email = $1;', [value])
+const uniqueEmail = async (value, userId) => {
+  const result = await pgConn.query('SELECT 1 FROM users WHERE email = $1 AND id != $2;', [value, userId])
   return !result.rows[0]
     ? true
     : {code: 'duplicate-value', message: 'Please provide a different email.'}

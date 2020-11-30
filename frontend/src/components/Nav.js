@@ -38,7 +38,7 @@ function Nav() {
       {/* then show different button depends on whether user is logged in */}
       {showButton
       ? userInfo?.isLoggedIn
-        ? <DropdownMenu button={<div>Hi, {userInfo.info.userName}!</div>} content={dropdownMenuContent} />
+        ? <DropdownMenu button={<div>Hi, {userInfo.info.name}!</div>} content={dropdownMenuContent} />
         : <Link to='/login'>
             <button className='login-btn' id="test_nav_login_button">Log in</button>
           </Link>
