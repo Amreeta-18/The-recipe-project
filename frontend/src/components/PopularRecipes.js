@@ -8,15 +8,15 @@ function PopularRecipes() {
 	
 	const fetchPopular = async () => {
 		fetch(urlJoin(config.sous.apiUrl, 'recipes', 'popular'), { 
-		  method: 'GET',
-		  headers: {
+		    method: 'GET',
+		    headers: {
 			'content-type': 'application/json',
 			'accept': 'application/json',
-		  },
+		    },
 		})
-		  .then(res => res.json())
-		  .then(data => setRecipes(data.results))
-		  .catch(e => console.log(e))
+		    .then(res => res.json())
+		    .then(data => setRecipes(data.results))
+		    .catch(e => console.log(e))
 	}
 
 	useEffect(() => {
@@ -30,8 +30,8 @@ function PopularRecipes() {
 			</div>
 
 			<div className='popular-wrapper' id='test_popular_recipes_wrapper'>
-        		{recipes && recipes.map(recipe => <RecipeCard recipe={recipe} key={recipe.id} fetchRecipes={fetchPopular} />)}
-      		</div>
+        			{recipes && recipes.map(recipe => <RecipeCard recipe={recipe} key={recipe.id} fetchRecipes={fetchPopular} />)}
+			</div>
 			
 			<style jsx='true'>
 				{`
@@ -50,7 +50,7 @@ function PopularRecipes() {
 					align-content: space-around;
 				}
 				`}
-      		</style>
+			</style>
 		</div>
 	)
 }
