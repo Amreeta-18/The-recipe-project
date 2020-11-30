@@ -1,4 +1,5 @@
 @import url('./styles/menu-button.css');
+@import url('./styles/dialog.css');
 
 :root {
   --c-brown: #B68933;
@@ -33,4 +34,8 @@ a {
 
 .row {
   display: flex;
+}
+
+.content-container {
+  height: calc(100vh - 190px);
 }

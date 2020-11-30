@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
-import BackgroundImg1 from '../images/splash1.jpg'
-import BackgroundImg2 from '../images/splash2.png'
+import BackgroundImg1 from '../images/splash4.jpg'
+import BackgroundImg2 from '../images/splash3.jpg'
 import {Carousel} from 'react-responsive-carousel'
 import {useHistory} from 'react-router-dom'
 import SearchBar from '../components/SearchBar'
@@ -41,6 +41,7 @@ function Landing() {
         {`
         .landing-container {
           margin: 0px;
+          background: rgba(252, 209, 127, 0.26);
         }
         .search-container {
           width: 100vw;

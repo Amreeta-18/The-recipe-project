@@ -15,7 +15,8 @@ function ErrMessage({errors, defaultMessage}) {
       <style jsx='true'>
         {`
         .main-error-message {
-          color: red;
+          color: #cf2f2f;
+          font-size:15px
         }
         `}
       </style>

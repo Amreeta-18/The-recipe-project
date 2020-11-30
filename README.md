@@ -1,8 +1,6 @@
-# This is an example of React app
-## What I did before
-`$ npx create-react-app react-example`  
-This command will generate a boilerplate like the master branch.  
-
+# Sous Chef  
+When people have some ingredients in their fridge but have no idea what to make, they can visit this website, search with the ingredient(s) they have, and get the recipe recommendations based on their ingredients.  
+This is a group project of CS 561 Software Engineering Method at Oregon State University.  
 ## How to use
 ### Setup
 `$ git clone git@github.com:wengair/react-example.git`  
@@ -12,24 +10,23 @@ Since we use the RESTful style to connect the frontend and backend, we need to i
 Run this command to install all the necessary libraries for the backend (the root folder `/`).  
 Then enter the `/frontend` folder and `$ npm install` again to install all necessary libraries for the frontend.  
 ### During the development
-Since our frontend and backend are separated, you need to run `$ npm start` in both folders (`/` and `/frontend`) to make the site work properly.  
-Or you could only run the command in one folder if you don't need another one.  
-For frontend:  
-This command will run the app and you can open [http://localhost:3000](http://localhost:3000) to view it in the browser.  
-One benefit is if you changed something, you don't need to rerun the command. Localhost will change it automatically.  
-You would want to `control + c` to stop and run `npm start` again if you have some relatively important change.  
-E.g. changing something in HTML's `<head>`.  
+#### Frontend
+Now you only need to run `$ npm start` in the frontend folder for frontend development.  
+It will connect to Heroku's database automatically.  
+#### Backend
+Since we use the PostgreSQL database on Heorku and its URL is changing all the time, you need to install [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli) first so that you can get the correct URL before running the `server.js`.  
+Now you need to run `$ npm run dev` in the root folder to get the right URL to connect to Heroku's database.  
+Also, you need to run `$ npm run dev` in the frontend folder if you want to try out the new backend with the frontend.
 
-For backend:  
-This command will run the server and you can open [http://localhost:8080](http://localhost:8080) to view endpoints in the browser.  
-Unlike the frontend, you need to restart the server by `$ npm start` again if you make any change.
+Unlike the frontend, you need to restart the server by `$ npm run dev` again if you made any change.
 
 ## File Structure
 ### Backend
 The root folder is the backend folder so basically, the frontend folder is put inside the backend folder.  
-`models` contains the table settings that we'll use in MongoDB  
-`receipeRecord` contains the data we get from Spoonacular  
-`services` contains files that are called in `server.js`  
+`migrations` contains the data schema of this project.  
+`receipeRecord` contains the sample data we get from Spoonacular.  
+`services` contains files that are called in `server.js`.  
+`tests` contains all tests for this website.  
 
 ### Frontend
 `public` contains HTML files like favicon.  
@@ -47,15 +44,3 @@ The root folder is the backend folder so basically, the frontend folder is put i
   You might find some warnings when you run `$ npm start`.  
   It doesn't really affect any performance but it would be great if you could follow the instruction and fix the style issues.  
 - I included the `.env` since it's easier for us to develop, normally we shouldn't do that though.  
-
-
-# mlab(MONGODB) setup and operations  
-- Defining the MONGOURI variable in server.js
-- Defining or creating the model files which represent the data schema like the dbSchema.js file in the models folder
-- Creating an object to the model using mongoose package and connecting to mongodb using MONGOURI
-- Using the object we can do all sort of operations on the database.
-- Please refer to the comments that have updated in the server.js file for more clarity.
-- Or else you can refer to the following links
-   - https://www.w3schools.com/nodejs/nodejs_mongodb_createcollection.asp
-   - https://medium.com/@umarmagaji/connecting-mongodb-using-mlab-with-node-js-application-fd3de5b94a7a
-   - https://medium.com/better-programming/how-to-use-mongoose-with-node-js-913a8073b29c

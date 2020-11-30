@@ -8,9 +8,10 @@ function FieldErrors({message}) {
       <style jsx='true'>
         {`
         .error-message {
-          color: red;
+          color: #cf2f2f;
           margin: 0px;
           height: 20px;
+          font-size:15px;
         }
         `}
       </style>

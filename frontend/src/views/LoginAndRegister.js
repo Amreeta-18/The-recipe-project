@@ -72,7 +72,7 @@ function LoginAndRegister() {
       .then(result => {
         if(result.ok) {
           // set user info to localstorage
-          userInfo.userLogIn({email: registerEmail})
+          userInfo.userLogIn(result.userInfo)
           history.push('/')
         }
         else {
@@ -86,11 +86,12 @@ function LoginAndRegister() {
   }
 
   return (
+   <div className='all-container' >
     <div className='container'>
       <div className='result-wrapper'>
         <div className='form-container'>
-          <div class = "login">
-            <p>Welcome Back!</p>
+          <div className='login' id='test_login_sign_in_container'>
+            <p>Welcome Back !</p>
             <p>Sign In</p>
             {/* since the form part is repeated, I put them into another component */}
             <ErrMessage
@@ -107,9 +108,9 @@ function LoginAndRegister() {
               setPassword={setLoginPassword}
             />
           </div>
-          <div class = "vertical-col" />
-          <div class = "account">
-            <p>New to Sous Chef?</p>
+          <div className='vertical-col' />
+          <div className='account' id='test_login_create_account_container'>
+            <p>New to Sous Chef ?</p>
             <p>Create New Account</p>
             <ErrMessage
               errors={registerErrors}
@@ -129,50 +130,65 @@ function LoginAndRegister() {
       </div>
       <style jsx='true'>
         {`
-        .container {
+        .all-container {
           height: calc(100vh - 190px);
+        }
+
+        .container {
+          //height: calc(100vh - 190px);
           text-align:center;
+          height: auto;
         }
         
         .login {
-          text-align:left;
-          float: left;
-          width: 50%;
+          //text-align:left;
+          //float: left;
+          width: 40%;
           top: 900px;
+          margin-right: auto;
+          margin-left: auto;
+          margin-top: auto;
+          margin-bottom: auto;
         }
 
         .account {
-          text-align:left;
-          float: right;
-          width: 50%;
+          width: 40%;
+          top: 900px;
+          margin-right: auto;
+          margin-left: auto;
+          margin-top: auto;
+          margin-bottom: auto;
         }
 	    
         .vertical-col {
-          height: 40%;
-          width: 1px;
-          background: black;
-          position: absolute;
-          left: 46%;
+          height: 100%;
+          width: 0.5px;
+          background: #928d8d;
+          justify-content: center;
         } 
         
         .result-wrapper {
-          display:inline-block;
+          display: inline-block;
           width: 921px;
-          height: 409px;
+          height: 430px;
           left: 151px;
           top: 400px;
-          background: rgba(252, 209, 127, 0.65);
+          background: rgb(252 209 127 / 44%);
           display: center;
         }
 
         .form-container {
           margin: 100px;
-          height: 300px;
-          text-align:center;
+          height: 50%;
+          text-align: center;
+          margin-right: auto;
+          margin-left: auto;
+          display: flex;
         }
         `}
       </style>
     </div>
+  </div>
   )
 }
 
