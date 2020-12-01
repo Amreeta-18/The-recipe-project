@@ -55,7 +55,7 @@ function SingleRecipeView({match}) {
             <div>
               <div className='row'>
                 <img src={TitleIcon} alt='title icon' className='header-icon' id='test_single_recipe_title_icon' />
-                <p className='title-text' id='test_single_recipe_title'>{recipe.name}</p>
+                <div className='title-container'><p className='title-text' id='test_single_recipe_title'>{recipe.name}</p></div>
               </div>
               {/* title, and other information */}
               <div className='row'>
