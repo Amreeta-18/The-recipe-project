@@ -1,5 +1,6 @@
 @import url('./styles/menu-button.css');
 @import url('./styles/dialog.css');
+@import url('./styles/combobox.css');
 
 :root {
   --c-brown: #B68933;

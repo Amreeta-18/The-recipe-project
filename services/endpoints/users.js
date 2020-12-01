@@ -194,4 +194,71 @@ router.route('/update').all(jsonParser).post(async (req, res) => {
   }
 })
 
+router.route('/stapleIngredientList').all(jsonParser).post(async (req, res) => {
+  try {
+    const userId = req.body.userId
+    const rawStapleIngredients = await pgConn.query(`
+      SELECT 
+        i.id,
+        i.name
+      FROM staple_ingredients AS si
+      JOIN ingredients AS i ON i.id = si.ingredient_id
+      WHERE user_id = $1
+      ORDER BY si.created_at ASC`
+      , [userId])
+
+    // reformat the array since PostgreSQL can't return camel case { ingredientId: xxx, ingredientName: xxx,} 
+    const finalStapleIngredients = rawStapleIngredients.rows.map(ingredient => {
+      return {
+        ingredientId: ingredient.id,
+        ingredientName: ingredient.name,
+      }
+    })
+    return res.send({
+      ok: true,
+      results: finalStapleIngredients
+    })
+  }
+  catch(err) {
+    // unexpected errors
+    logError(500, 'Exception occurs in endpoint while user trying to read all their staple ingredients', err)
+    return endpointError(res, 500, 'InternalServerError', 'Something went wrong and the list of staple ingredients could not be read by the user.')
+  }
+})
+
+router.route('/updateStaple').all(jsonParser).post(async (req, res) => {
+  const validationDefinition = {
+    userId: [
+      validate.notEmpty,
+      validate.isInt,
+    ],
+    ingredientId: [
+      validate.notEmpty,
+      validate.isInt,
+    ],
+  }
+
+  const errorMsg = await validate.run(validationDefinition, req.body)
+  if (errorMsg) return res.status(400).json(errorMsg)
+  
+  try {
+    const userId = req.body.userId
+    const ingredientId = req.body.ingredientId
+    const recordExist = await pgConn.query(`SELECT 1 FROM staple_ingredients WHERE user_id = $1 AND ingredient_id = $2;`, [userId, ingredientId])
+    // if the staple record already exist, delete it; otherwise add it
+    if(recordExist.rows[0]) {
+      await pgConn.query(`DELETE FROM staple_ingredients WHERE user_id = $1 AND ingredient_id = $2;`, [userId, ingredientId])
+    }
+    else {
+      await pgConn.query(`INSERT INTO staple_ingredients (user_id, ingredient_id, created_at) VALUES ($1, $2, NOW());`, [userId, ingredientId])
+    }
+    return res.send({ok: true})
+  }
+  catch(err) {
+    // unexpected errors
+    logError(500, 'Exception occurs in endpoint while user trying to toggle an staple ingredient', err)
+    return endpointError(res, 500, 'InternalServerError', 'Something went wrong and an staple ingredient could not be toggled by the user.')
+  }
+})
+
 module.exports = router
