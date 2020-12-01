@@ -106,7 +106,7 @@ function SearchResult({location}) {
         .result-wrapper {
           background: rgba(252, 209, 127, 0.26);
           display: grid;
-          grid-template-columns: 1fr 1fr 1fr;
+          grid-template-columns: 1fr 1fr 1fr 1fr;
           padding: 50px 65px 25px 65px;
           min-height: calc(100vh - 400px);
         }
