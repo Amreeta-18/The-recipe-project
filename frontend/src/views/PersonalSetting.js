@@ -4,6 +4,7 @@ import {UserInfo} from '../components/UserContext'
 import {config} from '../lib/config'
 import FormField from '../components/Form/FormField'
 import ErrMessage from '../components/ErrMessage'
+import PersonalPageTabs from '../components/PersonalPageTabs'
 const urlJoin = require('url-join')
 
 function PersonalSetting() {
@@ -64,6 +65,7 @@ function PersonalSetting() {
 
   return (
     <div className='content-container'>
+      <PersonalPageTabs name={userInfo.info.name}/>
       <span>ABOUT ME</span>
       <ErrMessage
         errors={errors}

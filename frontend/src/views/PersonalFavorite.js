@@ -1,5 +1,6 @@
 import React, {useState, useEffect, useContext} from 'react'
 import RecipeCard from '../components/RecipeCard'
+import PersonalPageTabs from '../components/PersonalPageTabs'
 import {UserInfo} from '../components/UserContext'
 import {config} from '../lib/config'
 const urlJoin = require('url-join')
@@ -31,6 +32,7 @@ function PersonalFavorite() {
 
   return (
     <div className='content-container'>
+      <PersonalPageTabs name={userInfo.info.name}/>
       <span>FAVORITE RECIPES</span>
       <div className='recipe-container'>
         {favoriteRecipes[0]
