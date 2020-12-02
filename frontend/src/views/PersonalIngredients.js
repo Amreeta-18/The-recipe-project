@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useContext} from 'react'
 import StapleCard from '../components/StapleCard'
 import SearchableDropdown from '../components/SearchableDropdown'
+import PersonalPageTabs from '../components/PersonalPageTabs'
 import {UserInfo} from '../components/UserContext'
 import {config} from '../lib/config'
 const urlJoin = require('url-join')
@@ -78,6 +79,7 @@ function PersonalIngredients() {
 
   return (
     <div className='content-container'>
+      <PersonalPageTabs name={userInfo.info.name}/>
       <span>Staples</span><br />
       <span>What’s always available in your pantry? Tell us what’s staple in your kitchen and we will curate our recommendadtions accordingly!</span>
       <SearchableDropdown options={ingredients} setResult={setChoosenIngredientId} placeholder='Enter ingredient...' />
