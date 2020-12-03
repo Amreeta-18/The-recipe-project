@@ -6,6 +6,11 @@
   border: solid 1px hsla(0, 0%, 0%, 0.25);
   background: hsla(0, 100%, 100%, 0.99);
   font-size: 85%;
+  color: #726f6f;
+  position: absolute;
+  width: 164.8px;
+  left: 226.2px;
+  top: 400.5px;
 }
 
 [data-reach-combobox-list] {
@@ -34,5 +39,5 @@
 }
 
 [data-suggested-value] {
-  font-weight: bold;
+  font-weight: 500;
 }

@@ -1,5 +1,5 @@
 import React from 'react'
-import DeleteButton from '../images/close.svg' // image from Fontawesome
+import DeleteButton from '../images/delete.png' // image from Fontawesome
 
 function StapleCard({ingredient, toggleStaple}) {
   return (
@@ -9,14 +9,20 @@ function StapleCard({ingredient, toggleStaple}) {
       <style jsx='true'>
         {`
         .staple-item {
-          margin: 2px;
+          margin: 7px;
           background-color: #F4DB9B;
+          border: 2px solid#976B16;
+          border-radius: 9px;
+          color: rgba(101, 84, 24, 1);
         }
 
         .delete-button {
           width: 20px;
           height: 20px;
           cursor: pointer;
+          position: relative;
+          top: -3px;
+          right: -2px;
         }
         `}
       </style>

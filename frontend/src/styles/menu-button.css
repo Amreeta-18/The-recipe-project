@@ -16,20 +16,23 @@
 [data-reach-menu-list],
 [data-reach-menu-items] {
   font-size: 14px;
-  color: blue;
+  color: rgb(124, 99, 11);
   display: block;
   white-space: nowrap;
-  border: 1px solid black;
+  border: 3px solid rgb(188, 142, 25);
   background: white;
   border-radius: 4px;
   outline: none;
-  padding: 20px 0px;
+  padding: 5px 4px;
 }
 
 [data-reach-menu-item] {
   display: block;
   user-select: none;
-}
+  padding: 5px 14px;
+  border-bottom: 2px solid rgb(188, 142, 25);
+  letter-spacing: 0.5px;
+  }
 
 /*
  The dom structure of a MenuLink is reach-menu-item > a,
@@ -52,9 +55,12 @@
   color: inherit;
   font: inherit;
   text-decoration: initial;
-
+  font-family: Ramaraja;
+  letter-spacing: 0.5px;
+  font-size: 17px;
   /* both */
-  padding: 5px 20px;
+  padding: 5px 14px;
+  
 }
 
 /* pseudo pseudo selector */
@@ -76,4 +82,5 @@
   font-size: 18px;
   color: black;
   outline: none;
+  font-family: Ramaraja;
 }
