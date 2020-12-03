@@ -4,6 +4,8 @@ import {UserInfo} from '../components/UserContext'
 import {config} from '../lib/config'
 import FormField from '../components/Form/FormField'
 import ErrMessage from '../components/ErrMessage'
+import PersonalPageTabs from '../components/PersonalPageTabs'
+
 const urlJoin = require('url-join')
 
 function PersonalSetting() {
@@ -64,37 +66,95 @@ function PersonalSetting() {
 
   return (
     <div className='content-container'>
-      <span>ABOUT ME</span>
+      <PersonalPageTabs name={userInfo.info.name}/>
+      
+      <div className='popular-title'>
+				<p>ABOUT ME</p>
+			</div>
+			
+    <div class="left">			
       <ErrMessage
         errors={errors}
         defaultMessage='Something went wrong and could not log in. Please try again.'
       />
+      <div>
       <form onSubmit={onSubmit}>
+      
         <div className='form-field-container'>
           <div>
             <FormField errorMsg={paramErrors?.email[0]?.message}>
+           <div className="name">
               <label htmlFor='email'>Email</label><br />
               <input {...bindEmail} value={email} id='email' type="text"/><br />
+            </div>
             </FormField>
+
+            <div className="name">
             <label htmlFor='first-name'>First Name</label><br />
             <input {...bindFirstName} value={firstName} id='first-name' type="text"/>
           </div>
+          </div>
           <div>
             <FormField errorMsg={paramErrors?.password[0]?.message}>
+            <div className="name">
               <label htmlFor='password'>Password</label><br />
               <input {...bindPassword} value={password} id='password' type="text"/><br />
+            </div>
             </FormField>
+            <div className="name">
             <label htmlFor='last-name'>Last Name</label><br />
             <input {...bindLastName} value={lastName} id='last-name' type="text"/>
           </div>
+          </div>
         </div>
-        <button type='submit'>Set Up</button>
+        <button type='submit' class="btn">Set Up</button>
       </form>
+      </div>
+      </div>
+      
+      <div class="right">
+      <p>Feast from your kitchen!</p>
+      <img src='images/splash3.jpg'></img>
+      </div>
+      
       <style jsx='true'>
           {`
           .form-field-container {
             display: flex;
+            height: 100%;
+            justify-content: center;
+          }
+          
+        
+        .popular-title {
+					font-family: Rambla;
+					color: #7C630B;
+					font-size: 32px;
+					text-align: left;
+					padding: 50px
+				}
+				
+				.name{
+				  margin: 10px;
+				  color: #7D7B7B;
+				  border-color: #7D7B7B;
+				}
+				
+				.btn{
+				  text-align: center;
+				  margin-left: 100px;
+				  background-color: white;
+				}
+				
+        .left {float:left;
+        padding: 10px;
+          
+        }
+        .right {float:left;
+        padding: 10px;
+        }
           `}
+          
       </style>
     </div>
   )
