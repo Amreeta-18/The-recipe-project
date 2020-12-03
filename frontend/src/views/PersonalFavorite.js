@@ -1,5 +1,6 @@
 import React, {useState, useEffect, useContext} from 'react'
 import RecipeCard from '../components/RecipeCard'
+import PersonalPageTabs from '../components/PersonalPageTabs'
 import {UserInfo} from '../components/UserContext'
 import {config} from '../lib/config'
 import BackgroundImg from '../images/Pumpkin Cinnamon Bread6.png' 

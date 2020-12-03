@@ -67,11 +67,9 @@ function PersonalSetting() {
   return (
     <div className='content-container'>
       <PersonalPageTabs name={userInfo.info.name}/>
-      
       <div className='popular-title'>
 				<p>ABOUT ME</p>
 			</div>
-			
     <div class="left">			
       <ErrMessage
         errors={errors}

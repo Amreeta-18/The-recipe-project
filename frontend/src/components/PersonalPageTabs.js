@@ -7,18 +7,15 @@ function PersonalPageTabs({name}) {
     <div>
       <div>
         <img src={Avatar} alt='default avatar' />
-
       </div>
       <div>
-      <div class="tab">
-        <span>Hi, {name}!</span>
-        <div class="divider">
+        <div class="tab">
+          <span>Hi, {name}!</span>
+          <div class="divider" />
+          <Link to='/settings'><button className='tag-btn' id="test_personal_page_personal_button">Personal</button></Link>
+          <Link to='/favorite-recipes'><button className='tag-btn' id="test_personal_page_tabs_favorite_button">Favorite</button></Link>
+          <Link to='/ingredients'><button className='tag-btn' id="test_personal_page_tabs_preferrence_button">Preference</button></Link>
         </div>
-        <Link to='/settings'><button className='tag-btn' id="test_personal_page_personal_button">Personal</button></Link>
-        <Link to='/favorite-recipes'><button className='tag-btn' id="test_personal_page_tabs_favorite_button">Favorite</button></Link>
-        <Link to='/ingredients'><button className='tag-btn' id="test_personal_page_tabs_preferrence_button">Preference</button></Link>
-
-      </div>
       </div>
       <style jsx='true'>
         {`
@@ -43,7 +40,6 @@ function PersonalPageTabs({name}) {
           height:auto;
           display:inline-block;
         }
-        
         `}
       </style>
     </div>
