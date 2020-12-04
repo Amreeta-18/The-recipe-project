@@ -83,29 +83,29 @@ function PersonalSetting() {
             <FormField errorMsg={paramErrors?.email[0]?.message}>
            <div className="name">
               <label htmlFor='email'>Email</label><br />
-              <input {...bindEmail} value={email} id='email' type="text"/><br />
+              <input {...bindEmail} value={email} id='test_personal_page_setting_email' type="text"/><br />
             </div>
             </FormField>
 
             <div className="name">
             <label htmlFor='first-name'>First Name</label><br />
-            <input {...bindFirstName} value={firstName} id='first-name' type="text"/>
+            <input {...bindFirstName} value={firstName} id='test_personal_page_setting_first_name' type="text"/>
           </div>
           </div>
           <div>
             <FormField errorMsg={paramErrors?.password[0]?.message}>
-            <div className="name">
-              <label htmlFor='password'>Password</label><br />
-              <input {...bindPassword} value={password} id='password' type="text"/><br />
-            </div>
+              <div className="name">
+                <label htmlFor='password'>Password</label><br />
+                <input {...bindPassword} value={password} id='test_personal_page_setting_password' type="text"/><br />
+              </div>
             </FormField>
             <div className="name">
             <label htmlFor='last-name'>Last Name</label><br />
-            <input {...bindLastName} value={lastName} id='last-name' type="text"/>
+            <input {...bindLastName} value={lastName} id='test_personal_page_setting_last_name' type="text"/>
           </div>
           </div>
         </div>
-        <button type='submit' class="btn">Set Up</button>
+        <button id='test_personal_page_setting_submit_button' type='submit'>Set Up</button>
       </form>
       </div>
       </div>

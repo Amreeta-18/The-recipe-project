@@ -85,18 +85,18 @@ def main():
     test_footer(driver, message_profile_page)               # Make sure footer is present
     test_profile_page(driver, message_profile_page)         # Test key elements of profile page
 
-    print("Testing favorite recipes page...")
-    test_site(driver, addr_favorite_recipes, message_favorite_recipes_page)     # Get favorite recipe page
-    test_header(driver, message_favorite_recipes_page)                          # Make sure header is present
-    test_footer(driver, message_favorite_recipes_page)                          # Make sure footer is present
-    test_favorite_recipes(driver, message_favorite_recipes_page)                # Test key elements of favorites page
-
-    print("Testing allergens page...")
-    test_site(driver, addr_allergens, message_allergens_page)   # Get allergens page
-    test_header(driver, message_allergens_page)                 # Make sure header is present
-    test_footer(driver, message_allergens_page)                 # Make sure footer is present
-    test_allergens(driver, message_allergens_page)              # Test key elements of allergens page
-
+    # print("Testing favorite recipes page...")
+    # test_site(driver, addr_favorite_recipes, message_favorite_recipes_page)     # Get favorite recipe page
+    # test_header(driver, message_favorite_recipes_page)                          # Make sure header is present
+    # test_footer(driver, message_favorite_recipes_page)                          # Make sure footer is present
+    # test_favorite_recipes(driver, message_favorite_recipes_page)                # Test key elements of favorites page
+    #
+    # print("Testing allergens page...")
+    # test_site(driver, addr_allergens, message_allergens_page)   # Get allergens page
+    # test_header(driver, message_allergens_page)                 # Make sure header is present
+    # test_footer(driver, message_allergens_page)                 # Make sure footer is present
+    # test_allergens(driver, message_allergens_page)              # Test key elements of allergens page
+    #
     print("Tests Completed")
 
 
@@ -143,7 +143,6 @@ def test_search_bar_exists(driver, message):
         print("Test Failed: ", message, " Search Bar is not on page.\n", e)
 
 
-# TODO - Comments
 # Test the search bar:
 #   send a string and press enter
 def test_search_bar_search(driver, search_bar, message):
@@ -237,20 +236,61 @@ def test_search_result_searchbar_exists(driver, message):
 #   Tests key elements on page
 def test_profile_page(driver, message):
     try:
-        personal_button = driver.find_element_by_id("test_profile_page_personal_button")
-        favorite_button = driver.find_element_by_id("test_profile_page_favorite_button")
-        allergen_button = driver.find_element_by_id("test_profile_page_allergen_button")
+        # Log into site
+        test_site(driver, addr_login, message_login_page)   # Get login page (needed for login)
+        helper_log_in(driver, message)                      # Log in
 
-        user_image = driver.find_element_by_id("test_profile_page_user_image")
+        # Test Personal Page
+        helper_personal_page(driver, message)
 
-        email_input = driver.find_element_by_id("test_profile_page_email_input")
-        first_name_input = driver.find_element_by_id("test_profile_page_first_name_input")
-        last_name_input = driver.find_element_by_id("test_profile_page_last_name_input")
-        password_input = driver.find_element_by_id("test_profile_page_password_input")
-
-        setup_button = driver.find_element_by_id("test_profile_page_setup_button")
     except selEx.NoSuchElementException as e:
         print("Test Failed: ", message, " Profile Page encountered error.\n", e)
+
+
+# Test the personal page
+def helper_personal_page(driver, message):
+    # Get dropdown menu for account
+    account_button = driver.find_element_by_id("menu-button--menu--1")  # Get button for account (id is modular)
+    account_button.click()  # Click button
+
+    # Click settings
+    setting_button = driver.find_element_by_id("option-0--menu--1")  # Get logout button
+    hover = ActionChains(driver).move_to_element(setting_button)  # Set up hover, to cause website effect
+    hover.perform()  # Hover the button
+    setting_button.click()  # Click logout
+
+    time.sleep(5)  # Give site time to load results
+
+    # Test personal page
+
+    # Test static elements
+    personal_button = driver.find_element_by_id("test_personal_page_personal_button")
+
+    # Test settings page
+    personal_button.click()
+    email_input = driver.find_element_by_id("test_personal_page_setting_email")
+    first_name_input = driver.find_element_by_id("test_personal_page_setting_first_name")
+    last_name_input = driver.find_element_by_id("test_personal_page_setting_last_name")
+    password_input = driver.find_element_by_id("test_personal_page_setting_password")
+    setup_button = driver.find_element_by_id("test_personal_page_setting_submit_button")
+
+    # Test favorites page
+    favorite_button = driver.find_element_by_id("test_personal_page_tabs_favorite_button")
+    favorite_button.click()  # Click logout
+    time.sleep(2)  # Give site time to load results
+    if "FAVORITE RECIPES" in driver.page_source:
+        print("\tFavorites Page Valid")
+    else:
+        print("\tFavorites Page Invalid")
+
+    # Test staples page
+    preference_button = driver.find_element_by_id("test_personal_page_tabs_preferrence_button")
+    preference_button.click()  # Click logout
+    time.sleep(2)  # Give site time to load results
+    if "Staples" in driver.page_source:
+        print("\tPreference Page Valid")
+    else:
+        print("\tPreference Page Invalid")
 
 
 # Test the login page
@@ -300,7 +340,7 @@ def helper_log_out(driver, message):
         account_button.click()                                              # Click button
 
         # Click logout
-        log_out_button = driver.find_element_by_id("option-0--menu--1")     # Get logout button
+        log_out_button = driver.find_element_by_id("option-3--menu--1")     # Get logout button
         hover = ActionChains(driver).move_to_element(log_out_button)        # Set up hover, to cause website effect
         hover.perform()                                                     # Hover the button
         log_out_button.click()                                              # Click logout
@@ -308,7 +348,6 @@ def helper_log_out(driver, message):
         time.sleep(5)   # Give site time to load results
 
         test_login_exists(driver, message_login_page)   # Make sure login button has returned
-
         if "Log in" in driver.page_source:
             print("\tLogout Successful")
         else:
