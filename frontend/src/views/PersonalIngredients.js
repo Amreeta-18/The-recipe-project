@@ -4,6 +4,7 @@ import SearchableDropdown from '../components/SearchableDropdown'
 import PersonalPageTabs from '../components/PersonalPageTabs'
 import {UserInfo} from '../components/UserContext'
 import {config} from '../lib/config'
+import Splash from '../images/splash-ing.svg'
 const urlJoin = require('url-join')
 
 function PersonalIngredients() {
@@ -79,19 +80,71 @@ function PersonalIngredients() {
 
   return (
     <div className='content-container'>
-      <PersonalPageTabs name={userInfo.info.name}/>
-      <span>Staples</span><br />
-      <span>What’s always available in your pantry? Tell us what’s staple in your kitchen and we will curate our recommendadtions accordingly!</span>
+            <PersonalPageTabs name={userInfo.info.name}/>
+            <div className="staple-back">
+            <img src={Splash} alt='default splash' width="72%" />
+            </div>
+     <div className='popular-title'>
+        <p>STAPLES</p>
+          <div className='horizontal-line'>
+           </div>
+     </div>
+    <div className='fuction-contain'>
+      <div className='describe'>
+        <span>What’s always available in your pantry? Tell us what’s staple in your kitchen and we will curate our recommendadtions accordingly!</span>
+      </div>
       <SearchableDropdown options={ingredients} setResult={setChoosenIngredientId} placeholder='Enter ingredient...' />
       <div className='staple-container'>
         {stapleList && stapleList.map((ingredient, idx) => <StapleCard ingredient={ingredient} key={idx} toggleStaple={updateStaple} />)}
-      </div>
+              </div>
+                </div>
+               
       <style jsx='true'>
         {`
+        .staple-back{
+          float: right;
+          text-align: right;
+          margin-top: -50px;
+          max-width: 65%;
+        }
+
+        .describe{
+          color: rgba(134, 108, 20, 1);
+          margin-bottom: 11px;
+          width: 80%;
+        }
+
+        .fuction-contain{
+          position: relative;
+          right: -228px;
+          width: 41%;
+          top: -90px;
+        }
         .staple-container {
           display: flex;
           flex-wrap: wrap;
         }
+        .popular-title {
+					font-family: Rambla;
+          color: #7C630B;
+          font-size: 32px;
+          text-align: left;
+          padding: 13px;
+          position: relative;
+          right: -159px;
+          font-weight: bolder;
+          top: -65px;
+        }
+
+        .horizontal-line{
+          position: relative;
+          width: 22%;
+          height: 0.5px;
+          background: #282c34;
+          top: -26px;
+          right: -54px;
+        }
+    
         `}
       </style>
     </div>

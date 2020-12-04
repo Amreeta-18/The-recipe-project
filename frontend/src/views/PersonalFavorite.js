@@ -40,6 +40,8 @@ function PersonalFavorite() {
       <PersonalPageTabs name={userInfo.info.name}/>
 			<div className='popular-title'>
 				<p>FAVORITE RECIPES</p>
+        <div className='horizontal-line'>
+          </div>
 			</div>
       <div className='recipe-container'>
         {favoriteRecipes[0]
@@ -52,21 +54,39 @@ function PersonalFavorite() {
 
       <style jsx='true'>
         {`
+          .word-container{
+
+          }
+
+          .horizontal-line{
+            position: relative;
+            width: 30%;
+            height: 0.5px;
+            background: #282c34;
+            top: -26px;
+            right: -54px;
+          }
+
           .recipe-container {
             display: flex;
             text-align: center;
             position: absolute;
-            top: 50%;
-            left: 25%;
-          }
+            top: 41%;
+            left: 18%;
+            color: #998848;
+           }
 
 
     		.popular-title {
 					font-family: Rambla;
-					color: #7C630B;
-					font-size: 32px;
-					text-align: left;
-					padding: 50px
+          color: #7C630B;
+          font-size: 32px;
+          text-align: left;
+          padding: 13px;
+          position: relative;
+          right: -159px;
+          font-weight: bolder;
+          top: -65px;
 				}
 				
 

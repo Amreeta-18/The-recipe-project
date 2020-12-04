@@ -5,7 +5,7 @@ import {config} from '../lib/config'
 import FormField from '../components/Form/FormField'
 import ErrMessage from '../components/ErrMessage'
 import PersonalPageTabs from '../components/PersonalPageTabs'
-
+import Splash from '../images/splash-person.svg'
 const urlJoin = require('url-join')
 
 function PersonalSetting() {
@@ -67,14 +67,20 @@ function PersonalSetting() {
   return (
     <div className='content-container'>
       <PersonalPageTabs name={userInfo.info.name}/>
+      <div className="person-back">
+        <img src={Splash} alt='default splash' width="72%" />
+          </div>
       <div className='popular-title'>
 				<p>ABOUT ME</p>
+        <div className='horizontal-line'>
+          </div>
 			</div>
-    <div class="left">			
+
+    <div className='btn-container'>		
       <ErrMessage
         errors={errors}
         defaultMessage='Something went wrong and could not log in. Please try again.'
-      />
+      /></div>
       <div>
       <form onSubmit={onSubmit}>
       
@@ -108,19 +114,45 @@ function PersonalSetting() {
         <button id='test_personal_page_setting_submit_button' type='submit'>Set Up</button>
       </form>
       </div>
-      </div>
       
       <div class="right">
-      <p>Feast from your kitchen!</p>
-      <img src='images/splash3.jpg'></img>
+      
+      
       </div>
       
       <style jsx='true'>
           {`
+          .person-back{
+            float: right;
+            text-align: right;
+            margin-top: -50px;
+            max-width: 65%;
+          }
+
+          .btn-container{
+            position: relative;
+            top: 135px;
+            right: -253px;
+            width: 35%;
+          }
+
+          .horizontal-line{
+            position: relative;
+            width: 22%;
+            height: 0.5px;
+            background: #282c34;
+            top: -26px;
+            right: -54px;
+          }
+
           .form-field-container {
             display: flex;
             height: 100%;
             justify-content: center;
+            right: -140px;
+            top: -110px;
+            position: relative;
+            width: 50%;
           }
           
         
@@ -129,26 +161,42 @@ function PersonalSetting() {
 					color: #7C630B;
 					font-size: 32px;
 					text-align: left;
-					padding: 50px
+          padding: 13px;
+          position: relative;
+          right: -159px;
+          font-weight: bolder;
+          top: -65px;
 				}
 				
 				.name{
 				  margin: 10px;
 				  color: #7D7B7B;
-				  border-color: #7D7B7B;
+          border-color: #7D7B7B;
+          font-size: 17px;
+          
 				}
 				
 				.btn{
 				  text-align: center;
-				  margin-left: 100px;
-				  background-color: white;
+          margin-left: 100px;
+          background-color: white;
+          position: relative;
+          left: 460px;
+          top: -100px;
+          border-color: #a29f9f;
+          width: 73px;
+          height: 20px;
+          color: #7D7B7B;
+          border-radius: 6px;
+      }
 				}
 				
         .left {float:left;
         padding: 10px;
           
         }
-        .right {float:left;
+        .right {
+        float:left;
         padding: 10px;
         }
           `}
