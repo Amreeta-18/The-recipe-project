@@ -11,9 +11,28 @@ const pgConn = require('../dbConnection')
 
 router.route('/findByIngredients').all(jsonParser).post(async (req, res) => {
   try {
+    // if user is logged in, find all their favorited recipes and staple ingredients
+    const userId = req.body.userId
+    const userFavorites = await pgConn.query(`SELECT * FROM favorite_recipes WHERE user_id = $1;`, [userId])
+    const favoriteRecords = {}
+    // turn the result array into object so that later we can search connection by recipe id
+    userFavorites.rows.forEach(favorite => favoriteRecords[favorite.recipe_id] = true)
+
+    // get staple ingredients
+    const staples = await pgConn.query(`
+      SELECT
+        i.id,
+        i.name
+      FROM staple_ingredients AS si
+      JOIN ingredients AS i ON i.id = si.ingredient_id
+      WHERE si.user_id = $1;`, [userId])
+    const stapleIngredients = staples.rows.map(ingredient => ingredient.name)
+
     const queryIngredients = req.body.queryIngredients
+    // combine user's staple ingredients with their query ingredients
+    const allUserIngredients = queryIngredients.concat(stapleIngredients)
     // SQL: WHERE name SIMILAR TO '%string1|string2%'
-    const newQuery = `%(${queryIngredients.join('|').toLowerCase()})%`
+    const newQuery = `%(${allUserIngredients.join('|').toLowerCase()})%`
     const findIngredientResults = await pgConn.query(`SELECT * FROM ingredients WHERE name SIMILAR TO $1;`,[newQuery])
     const ingredientIds = findIngredientResults.rows.map(ingredient => ingredient.id)
     const results = await pgConn.query(`
@@ -39,12 +58,7 @@ router.route('/findByIngredients').all(jsonParser).post(async (req, res) => {
       `, [ingredientIds])
     if(!results.rows[0]) return endpointError(res, 400, 'BadRequest', 'Incorrect email or password.')
 
-    // if user is logged in, find all their favorited recipes and add into the result
-    const userId = req.body.userId
-    const userFavorites = await pgConn.query(`SELECT * FROM favorite_recipes WHERE user_id = $1;`, [userId])
-    const favoriteRecords = {}
-    // turn the result array into object so that later we can search connection by recipe id
-    userFavorites.rows.forEach(favorite => favoriteRecords[favorite.recipe_id] = true)
+    
 
     const finalResult = results.rows.map(result => {
       return {
