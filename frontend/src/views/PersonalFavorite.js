@@ -75,9 +75,8 @@ function PersonalFavorite() {
           color: #7C630B;
           font-size: 32px;
           text-align: left;
-          padding: 0px 13px 13px 13px;
+          padding: 0px 13px 13px 172px;
           position: relative;
-          right: -159px;
           font-weight: bolder;
           top: -65px;
 				}
