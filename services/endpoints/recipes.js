@@ -11,6 +11,7 @@ const pgConn = require('../dbConnection')
 
 router.route('/findByIngredients').all(jsonParser).post(async (req, res) => {
   try {
+    let foundResults = true
     // if user is logged in, find all their favorited recipes and staple ingredients
     const userId = req.body.userId
     const userFavorites = await pgConn.query(`SELECT * FROM favorite_recipes WHERE user_id = $1;`, [userId])
@@ -27,15 +28,17 @@ router.route('/findByIngredients').all(jsonParser).post(async (req, res) => {
       JOIN ingredients AS i ON i.id = si.ingredient_id
       WHERE si.user_id = $1;`, [userId])
     const stapleIngredients = staples.rows.map(ingredient => ingredient.name)
-
     const queryIngredients = req.body.queryIngredients
     // combine user's staple ingredients with their query ingredients
     const allUserIngredients = queryIngredients.concat(stapleIngredients)
+
+    let results = {rows: []}
+    if(allUserIngredients[0]) {
     // SQL: WHERE name SIMILAR TO '%string1|string2%'
     const newQuery = `%(${allUserIngredients.join('|').toLowerCase()})%`
     const findIngredientResults = await pgConn.query(`SELECT * FROM ingredients WHERE name SIMILAR TO $1;`,[newQuery])
     const ingredientIds = findIngredientResults.rows.map(ingredient => ingredient.id)
-    const results = await pgConn.query(`
+    results = await pgConn.query(`
       SELECT rc.id,
              rc.name,
              rc.imgurl,
@@ -63,7 +66,11 @@ router.route('/findByIngredients').all(jsonParser).post(async (req, res) => {
       ORDER BY ratio DESC
       `, [ingredientIds])
       // ORDER BY total_matched DESC, total ASC
-    if(!results.rows[0]) return endpointError(res, 400, 'BadRequest', 'Incorrect email or password.')
+      }
+      if(!results.rows[0]) {
+        results = await pgConn.query(`SELECT id, name, imgurl FROM recipes ORDER BY spoonacular_score DESC LIMIT 12;`)
+        foundResults = false
+      }
 
     const finalResult = results.rows.map(result => {
       return {
@@ -74,6 +81,7 @@ router.route('/findByIngredients').all(jsonParser).post(async (req, res) => {
 
     return res.send({
       ok: true,
+      foundResults: foundResults,
       results: finalResult,
     })
   }

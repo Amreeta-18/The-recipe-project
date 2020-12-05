@@ -1,4 +1,5 @@
 import React, {createContext, useState, useEffect} from 'react'
+import {useLocation, useHistory} from 'react-router-dom'
 
 export const UserInfo = createContext(null)
 
@@ -10,6 +11,9 @@ function UserContext({children}) {
   const [userEmail, setUserEmail] = useState()
   const [userFirstName, setUserFirstName] = useState()
   const [userLastName, setUserLastName] = useState()
+  const history = useHistory()
+  const location = useLocation()
+  const pathsToRedirect = ['/settings', '/favorite-recipes', '/ingredients']
   
   const info = {
     id: userId,
@@ -37,6 +41,7 @@ function UserContext({children}) {
     setUserName('')
     setUserId(null)
     localStorage.removeItem('accessToken')
+    if(pathsToRedirect.includes(location.pathname)) history.push('/')
   }
 
   // check whether local storage has user's info or not

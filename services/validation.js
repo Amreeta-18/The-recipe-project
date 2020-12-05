@@ -17,7 +17,7 @@ const uniqueEmail = async (value, userId) => {
   const result = await pgConn.query('SELECT 1 FROM users WHERE email = $1 AND id != $2;', [value, userId])
   return !result.rows[0]
     ? true
-    : {code: 'duplicate-value', message: 'Please provide a different email.'}
+    : {code: 'duplicate-value', message: 'This email has been taken, please provide a different email.'}
 }
 
 const validEmailFormat = (value) => {
