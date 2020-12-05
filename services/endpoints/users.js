@@ -48,7 +48,7 @@ router.route('/register').all(jsonParser).post(async (req, res) => {
     email: [
       validate.notEmpty,
       validate.validEmailFormat,
-      validate.uniqueEmail,
+      validate.addCondition(validate.uniqueEmail, 0),
     ],
     password: [
       validate.notEmpty,
