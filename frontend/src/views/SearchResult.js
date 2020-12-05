@@ -8,11 +8,12 @@ const urlJoin = require('url-join')
 
 function SearchResult({location}) {
   // when redirected form landing page, the user's query will be put in location.state.queryString
-  const [queryString, setQueryString] = useState(location.state.queryString)
+  const [queryString, setQueryString] = useState(location?.state?.queryString)
   const [recipes, setRecipes] = useState()
   const [resultPerPage] = useState(6) // The number of results to show on a "page"
   const [pageNum, setPageNum] = useState(1) // The current page number, in terms of what group of results are shown
   const [pageRecipes, setPageRecipes] = useState() // Array of recipes shown in quantity of resultPerPage
+  const [displayHint, setdisplayHint] = useState(false)
   const userInfo = useContext(UserInfo)
 
   const submitHandler = (e) => {
@@ -23,7 +24,7 @@ function SearchResult({location}) {
 
   const fetchRecipes = async () => {
     setPageNum(1)
-    const queryIngredients = queryString.replace(', ', ',').split(',')
+    const queryIngredients = queryString ? queryString.replace(', ', ',').split(',') : []
     fetch(urlJoin(config.sous.apiUrl, 'recipes', 'findByIngredients'), {
       method: 'POST',
       headers: {
@@ -36,7 +37,11 @@ function SearchResult({location}) {
       }),
     })
       .then(res => res.json())
-      .then(data => setRecipes(data.results))
+      .then(data => {
+        if(data.foundResults) setdisplayHint(false)
+        else setdisplayHint(true)
+        setRecipes(data.results)
+      })
       .catch(e => console.log(e))
   }
 
@@ -82,18 +87,16 @@ function SearchResult({location}) {
       </div>
       {/* if recipes has value, print all recipes' title */}
       {/* we need "recipes &&" to not show anything since recipes will recieve data later (in useEffect) */}
-      
+      {displayHint ? <p className='not-found-hint'>Oops! No results found for these ingredients. <br />Try out some of the most popular recipes below!</p> : null}
       <div className='result-wrapper'>
         {pageRecipes && pageRecipes.map(recipe => <RecipeCard recipe={recipe} key={recipe.id} fetchRecipes={fetchRecipes} />)}
       </div>
-    
       <div className='button-container'>
         <div className='button-wrapper'>
           <button className='nav-button' id='test_search_result_navbutton_prev' onClick={() => changePage(pageNum - 1)}>previous</button>
           <button className='nav-button' id='test_search_result_navbutton_next' onClick={() => changePage(pageNum + 1)}>next</button>
         </div>
       </div>
-
       <style jsx='true'>
         {`
         .searchbar-container {
@@ -109,6 +112,13 @@ function SearchResult({location}) {
           grid-template-columns: 1fr 1fr 1fr;
           padding: 50px 65px 25px 65px;
           min-height: calc(100vh - 400px);
+        }
+
+        .not-found-hint {
+          margin: 0px 0px -45px 0px;
+          color: #cf2f2f;
+          font-size:15px;
+          text-align: center;
         }
 
         .button-container{
