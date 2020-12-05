@@ -30,7 +30,7 @@ function PopularRecipes() {
 			</div>
 
 			<div className='popular-wrapper' id='test_popular_recipes_wrapper'>
-        			{recipes && recipes.map(recipe => <RecipeCard recipe={recipe} key={recipe.id} fetchRecipes={fetchPopular} />)}
+        		{recipes && recipes.map(recipe => <RecipeCard recipe={recipe} key={recipe.id} fetchRecipes={fetchPopular} />)}
 			</div>
 			
 			<style jsx='true'>

@@ -80,25 +80,28 @@ function PersonalIngredients() {
 
   return (
     <div className='content-container'>
-            <PersonalPageTabs name={userInfo.info.name}/>
-            <div className="staple-back">
-            <img src={Splash} alt='default splash' width="72%" />
-            </div>
-     <div className='popular-title'>
-        <p>STAPLES</p>
-          <div className='horizontal-line'>
-           </div>
-     </div>
-    <div className='fuction-contain'>
-      <div className='describe'>
-        <span>What’s always available in your pantry? Tell us what’s staple in your kitchen and we will curate our recommendadtions accordingly!</span>
+      <PersonalPageTabs name={userInfo.info.name}/>
+      <div className="staple-back">
+        <img src={Splash} alt='default splash' width="72%" />
       </div>
-      <SearchableDropdown options={ingredients} setResult={setChoosenIngredientId} placeholder='Enter ingredient...' />
-      <div className='staple-container'>
-        {stapleList && stapleList.map((ingredient, idx) => <StapleCard ingredient={ingredient} key={idx} toggleStaple={updateStaple} />)}
-              </div>
-                </div>
-               
+     
+      <div className='popular-title'>
+        <p>STAPLES</p>
+        <div className='horizontal-line'/>
+      </div>
+    
+      <div className='fuction-contain'>
+        <div className='describe'>
+          <span>What’s always available in your pantry? Tell us what’s staple in your kitchen and we will curate our recommendadtions accordingly!</span>
+        </div>
+        
+        <SearchableDropdown options={ingredients} setResult={setChoosenIngredientId} placeholder='Enter ingredient...' />
+        
+        <div className='staple-container'>
+          {stapleList && stapleList.map((ingredient, idx) => <StapleCard ingredient={ingredient} key={idx} toggleStaple={updateStaple} />)}
+        </div>
+      </div>
+            
       <style jsx='true'>
         {`
         .staple-back{
@@ -120,10 +123,12 @@ function PersonalIngredients() {
           width: 41%;
           top: -90px;
         }
+
         .staple-container {
           display: flex;
           flex-wrap: wrap;
         }
+
         .popular-title {
 					font-family: Rambla;
           color: #7C630B;
@@ -144,7 +149,6 @@ function PersonalIngredients() {
           top: -26px;
           right: -54px;
         }
-    
         `}
       </style>
     </div>

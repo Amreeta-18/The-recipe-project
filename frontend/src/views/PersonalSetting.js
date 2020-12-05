@@ -100,6 +100,7 @@ function PersonalSetting() {
                 <input {...bindFirstName} value={firstName} id='test_personal_page_setting_first_name' type="text"/>
               </div>
             </div>
+            
             <div>
               <FormField errorMsg={paramErrors?.password[0]?.message}>
                 <div className="name">
