@@ -70,7 +70,6 @@ function LoginAndRegister() {
     })
       .then(res => res.json())
       .then(result => {
-        console.log(result)
         if(result.ok) {
           // set user info to localstorage
           userInfo.userLogIn(result.userInfo)
