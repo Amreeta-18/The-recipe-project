@@ -31,18 +31,22 @@ function Landing() {
 			      {imgs.map((imgurl, idx) => <img src={imgurl} alt='background' id="test_landing_carousel_images" key={idx} className='slide-img' />)}
 			    </Carousel>
 		    </div>
+
 		    {/* I turned this search bar into a component since we'll use it twice */}
 		    <SearchBar onSubmit={submitHandler} queryString={queryString} setQueryString={setQueryString} />
 		  </div>
+      
       <div className='popular-container'>
         <PopularRecipes />
       </div>
+      
       <style jsx='true'>
         {`
         .landing-container {
           margin: 0px;
           background: rgba(252, 209, 127, 0.26);
         }
+
         .search-container {
           width: 100vw;
           height: calc(100vh - 75px);
@@ -69,7 +73,6 @@ function Landing() {
           height: calc(100vh - 140px);
           object-fit: cover;
         }
-
         `}
       </style>
     </div>

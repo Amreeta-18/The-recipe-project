@@ -94,10 +94,12 @@ function LoginAndRegister() {
             <p>Welcome Back !</p>
             <p>Sign In</p>
             {/* since the form part is repeated, I put them into another component */}
+            
             <ErrMessage
               errors={loginErrors}
               defaultMessage='Something went wrong and could not log in. Please try again.'
             />
+            
             <AccountForm 
               onSubmit={onLoginSubmit}
               paramErrors={loginParamErrors}
@@ -108,14 +110,18 @@ function LoginAndRegister() {
               setPassword={setLoginPassword}
             />
           </div>
+          
           <div className='vertical-col' />
+          
           <div className='account' id='test_login_create_account_container'>
             <p>New to Sous Chef ?</p>
             <p>Create New Account</p>
+            
             <ErrMessage
               errors={registerErrors}
               defaultMessage='Something went wrong and the new account could not be created. Please try again.'
             />
+            
             <AccountForm 
               onSubmit={onRegisterSubmit}
               paramErrors={registerParamErrors}
@@ -128,6 +134,7 @@ function LoginAndRegister() {
           </div>
         </div>
       </div>
+      
       <style jsx='true'>
         {`
         .all-container {

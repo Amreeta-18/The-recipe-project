@@ -9,7 +9,6 @@ function PersonalPageTabs({name}) {
         <div class="tab-container">
           <div class="divider" />
           
-          
           <Link to='/settings'>
             <button className='tag-btn' id="test_personal_page_personal_button">
               <span>Personal</span>

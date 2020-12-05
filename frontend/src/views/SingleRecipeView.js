@@ -57,7 +57,9 @@ function SingleRecipeView({match}) {
       <div className='searchbar-container'>
         <SearchBar onSubmit={submitHandler} queryString={queryString} setQueryString={setQueryString} />
       </div>
+
       <div className='stripe' />
+      
       {recipe && (
         <div className='recipe-container'>
           <div className='row'>
@@ -72,16 +74,19 @@ function SingleRecipeView({match}) {
                 height={30}
               />
             </div>
+
             <div>
               <div className='row'>
                 <img src={TitleIcon} alt='title icon' className='header-icon' id='test_single_recipe_title_icon' />
                 <div className='title-container'><p className='title-text' id='test_single_recipe_title'>{recipe.name}</p></div>
               </div>
+
               {/* title, and other information */}
               <div className='row'>
                 <div className='header-icon'>
                   <img src={NutritionIcon} alt='nutrition icon' className='nutrition-icon' />
                 </div>
+
                 <div>
                   <p className='header-sub-title nutrition-title'>Nutritional Facts (per serving):</p>
                   {/* only list the nutritions that we want to show to users */}
@@ -97,7 +102,9 @@ function SingleRecipeView({match}) {
                     }
                     else return null
                   })}
+
                   <p className='daily-value'>*Percent Daily Values are based on a 2,000 calorie diet. </p>
+                  
                   <div className='row recipe-misc-container'>
                     {/* calories */}
                     <div className='row recipe-misc'>
@@ -108,6 +115,7 @@ function SingleRecipeView({match}) {
                         <p className='misc-content'>Per Serving</p>
                       </div>
                     </div>
+
                     {/* yield */}
                     <div className='row recipe-misc'>
                       <img src={YieldIcon} alt='yield icon' />
@@ -116,6 +124,7 @@ function SingleRecipeView({match}) {
                         <p className='misc-content' id='test_single_recipe_serving'>{recipe.servings} Serving{recipe.servings > 1 ? 's' : ''}</p>
                       </div>
                     </div>
+
                     {/* timing */}
                     <div className='row recipe-misc'>
                       <img src={TimeIcon} alt='time icon' />
@@ -129,6 +138,7 @@ function SingleRecipeView({match}) {
               </div>
             </div>
           </div>
+
           <div className='row body-container'>
             <div className='instruction-container'>
               <p className='body-title'>Directions:</p>
@@ -141,6 +151,7 @@ function SingleRecipeView({match}) {
                 )
               })}
             </div>
+
             <div className='ingredient-container'>
               <div className='sticky'>
                 <p className='body-title'>Ingredients:</p>
@@ -153,6 +164,7 @@ function SingleRecipeView({match}) {
           </div>
         </div>
       )}
+      
       <style jsx='true'>
         {`
         .searchbar-container {

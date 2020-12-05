@@ -40,42 +40,35 @@ function PersonalFavorite() {
       <PersonalPageTabs name={userInfo.info.name}/>
 			<div className='popular-title'>
 				<p>FAVORITE RECIPES</p>
-        <div className='horizontal-line'>
-          </div>
+        <div className='horizontal-line'/>
 			</div>
+
       <div className='recipe-container'>
         {favoriteRecipes[0]
           ? favoriteRecipes.map(recipe => <RecipeCard recipe={recipe} key={recipe.id} fetchRecipes={getPersonalFavorites} />)
           : <p>You haven't added any favorite recipe yet!</p>
           }
       </div>
-      
-
 
       <style jsx='true'>
         {`
-          .word-container{
+        .horizontal-line{
+          position: relative;
+          width: 30%;
+          height: 0.5px;
+          background: #282c34;
+          top: -26px;
+          right: -54px;
+        }
 
+        .recipe-container {
+          display: flex;
+          text-align: center;
+          position: absolute;
+          top: 41%;
+          left: 18%;
+          color: #998848;
           }
-
-          .horizontal-line{
-            position: relative;
-            width: 30%;
-            height: 0.5px;
-            background: #282c34;
-            top: -26px;
-            right: -54px;
-          }
-
-          .recipe-container {
-            display: flex;
-            text-align: center;
-            position: absolute;
-            top: 41%;
-            left: 18%;
-            color: #998848;
-           }
-
 
     		.popular-title {
 					font-family: Rambla;
@@ -88,10 +81,8 @@ function PersonalFavorite() {
           font-weight: bolder;
           top: -65px;
 				}
-				
-
         `}
-        </style>  
+      </style>  
     </div>
   )
 }
