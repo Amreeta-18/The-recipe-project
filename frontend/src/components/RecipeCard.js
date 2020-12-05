@@ -10,14 +10,13 @@ function RecipeCard({recipe, fetchRecipes}) {
     <div className='form-recipe'>
       <div className='recipe-card' id='test_search_result_recipe_card'>
         <Link to={`/recipes/${recipe.id}`}>
-          <div>
-            <img src={recipe.imgurl} className='recipe-img' id='test_search_result_recipe_image' alt={recipe.name} />
-            <div className='reicpe-text'>
-              <p className='recipe-name' id='test_search_result_recipe_title'> {recipe.name}</p>
-            </div>
+          <img src={recipe.imgurl} className='recipe-img' id='test_search_result_recipe_image' alt={recipe.name} />
+          <div className='reicpe-text'>
+            <p className='recipe-name' id='test_search_result_recipe_title'> {recipe.name}</p>
           </div>
         </Link>
-        <div>
+
+        <div className='favorite-heart' id='test_search_result_recipe_favorite'>
           <FavoriteImg
             hasFavorited={recipe.favoritedByCurrentUser}
             userId={userInfo.info.id}
@@ -45,6 +44,7 @@ function RecipeCard({recipe, fetchRecipes}) {
           margin-bottom: 20px;
           margin-left: auto;
           margin-right: auto;
+          overflow-y: hidden;
         }
 
         .recipe-img {
@@ -57,6 +57,13 @@ function RecipeCard({recipe, fetchRecipes}) {
           display: flex;
           justify-content: space-between;
           min-height: 40px;
+          max-width: 210px;
+          display:inline-block;
+        }
+
+        .favorite-heart {
+          float: right;
+          
         }
 
         .recipe-name {

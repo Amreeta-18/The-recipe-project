@@ -22,7 +22,7 @@ function UserContext({children}) {
   // since React will lose all its state value if user refresh the page
   // I put user's info in local storage to keep user logged in if they refresh the page or come back next time
   const userLogIn = (userInfo) => {
-    const name = userInfo.lastName || userInfo.email.split('@')[0]
+    const name = userInfo.firstName || userInfo.email.split('@')[0]
     setIsLoggedIn(true)
     setUserName(name)
     setUserId(userInfo.id)

@@ -4,7 +4,10 @@ import DeleteButton from '../images/delete.png' // image from Fontawesome
 function StapleCard({ingredient, toggleStaple}) {
   return (
     <div className='staple-item'>
-      {ingredient.ingredientName}
+      <div className='ingredient'>
+        {ingredient.ingredientName}
+      </div>
+
       <img src={DeleteButton} alt='close button' className='delete-button' onClick={() => toggleStaple(ingredient.ingredientId)} />
       <style jsx='true'>
         {`
@@ -16,12 +19,19 @@ function StapleCard({ingredient, toggleStaple}) {
           color: rgba(101, 84, 24, 1);
         }
 
+        .ingredient {
+          padding-left: 8px;
+          padding-bottom: 5px;
+          display:inline-block;
+        }
+
         .delete-button {
+          display:inline-block;
           width: 20px;
           height: 20px;
           cursor: pointer;
           position: relative;
-          top: -3px;
+          top: -1px;
           right: -2px;
         }
         `}
