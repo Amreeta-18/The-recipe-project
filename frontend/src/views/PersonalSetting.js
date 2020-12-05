@@ -67,103 +67,108 @@ function PersonalSetting() {
   return (
     <div className='content-container'>
       <PersonalPageTabs name={userInfo.info.name}/>
+      
       <div className="person-back">
         <img src={Splash} alt='default splash' width="72%" />
-          </div>
+      </div>
+      
       <div className='popular-title'>
 				<p>ABOUT ME</p>
-        <div className='horizontal-line'>
-          </div>
+        <div className='horizontal-line'></div>
 			</div>
 
-    <div className='btn-container'>		
-      <ErrMessage
-        errors={errors}
-        defaultMessage='Something went wrong and could not log in. Please try again.'
-      /></div>
-      <div>
-      <form onSubmit={onSubmit}>
+      <div className='btn-container'>		
+        <ErrMessage
+          errors={errors}
+          defaultMessage='Something went wrong and could not log in. Please try again.'
+        />
+      </div>
       
-        <div className='form-field-container'>
-          <div>
-            <FormField errorMsg={paramErrors?.email[0]?.message}>
-           <div className="name">
-              <label htmlFor='email'>Email</label><br />
-              <input {...bindEmail} value={email} id='test_personal_page_setting_email' type="text"/><br />
-            </div>
-            </FormField>
+      <div className='big-form-container'>
+        <form onSubmit={onSubmit}>
+          <div className='form-field-container'>
+            <div>
+              <FormField errorMsg={paramErrors?.email[0]?.message}>
+                <div className="name">
+                  <label htmlFor='email'>Email</label><br />
+                  <input {...bindEmail} value={email} id='test_personal_page_setting_email' type="text"/><br />
+                </div>
+              </FormField>
 
-            <div className="name">
-            <label htmlFor='first-name'>First Name</label><br />
-            <input {...bindFirstName} value={firstName} id='test_personal_page_setting_first_name' type="text"/>
-          </div>
-          </div>
-          <div>
-            <FormField errorMsg={paramErrors?.password[0]?.message}>
               <div className="name">
-                <label htmlFor='password'>Password</label><br />
-                <input {...bindPassword} value={password} id='test_personal_page_setting_password' type="text"/><br />
+                <label htmlFor='first-name'>First Name</label><br />
+                <input {...bindFirstName} value={firstName} id='test_personal_page_setting_first_name' type="text"/>
               </div>
-            </FormField>
-            <div className="name">
-            <label htmlFor='last-name'>Last Name</label><br />
-            <input {...bindLastName} value={lastName} id='test_personal_page_setting_last_name' type="text"/>
+            </div>
+            <div>
+              <FormField errorMsg={paramErrors?.password[0]?.message}>
+                <div className="name">
+                  <label htmlFor='password'>Password</label><br />
+                  <input {...bindPassword} value={password} id='test_personal_page_setting_password' type="text"/><br />
+                </div>
+              </FormField>
+
+              <div className="name">
+                <label htmlFor='last-name'>Last Name</label><br />
+                <input {...bindLastName} value={lastName} id='test_personal_page_setting_last_name' type="text"/>
+              </div>
+            </div>
           </div>
+
+          <div className='classy-button'>
+            <button className='submit-btn' id='test_personal_page_setting_submit_button' type='submit'>Set Up</button>
           </div>
-        </div>
-        <button id='test_personal_page_setting_submit_button' type='submit'>Set Up</button>
-      </form>
+        </form>
       </div>
-      
-      <div class="right">
-      
-      
-      </div>
-      
+
+      <div class="right"></div>
+
       <style jsx='true'>
-          {`
-          .person-back{
-            float: right;
-            text-align: right;
-            margin-top: -50px;
-            max-width: 65%;
-          }
+        {`
+        .person-back{
+          float: right;
+          text-align: right;
+          margin-top: -50px;
+          max-width: 65%;
+        }
 
-          .btn-container{
-            position: relative;
-            top: 135px;
-            right: -253px;
-            width: 35%;
-          }
+        .btn-container{
+          position: relative;
+          top: 135px;
+          right: -253px;
+          width: 35%;
+        }
 
-          .horizontal-line{
-            position: relative;
-            width: 22%;
-            height: 0.5px;
-            background: #282c34;
-            top: -26px;
-            right: -54px;
-          }
+        .horizontal-line{
+          position: relative;
+          width: 22%;
+          height: 0.5px;
+          background: #282c34;
+          top: -26px;
+          right: -54px;
+        }
 
-          .form-field-container {
-            display: flex;
-            height: 100%;
-            justify-content: center;
-            right: -140px;
-            top: -110px;
-            position: relative;
-            width: 50%;
-          }
-          
+        .big-form-container{
+          right: -140px;
+          top: -110px;
+          position: relative;
+        }
+
+        .form-field-container {
+          display: flex;
+          height: 100%;
+          justify-content: center;
+          width: 50%;
+        }
         
         .popular-title {
 					font-family: Rambla;
 					color: #7C630B;
 					font-size: 32px;
 					text-align: left;
-          padding: 13px;
+          padding: 0px 13px 13px 13px;
           position: relative;
-          right: -159px;
+          padding-left: 159px;
           font-weight: bolder;
           top: -65px;
 				}
@@ -173,8 +178,20 @@ function PersonalSetting() {
 				  color: #7D7B7B;
           border-color: #7D7B7B;
           font-size: 17px;
-          
-				}
+        }
+
+        .classy-button{
+          text-align: center;
+        }
+        
+        .submit-btn {
+          font-size: large;
+          font-family: Rambla;
+          background-color: white;
+          border-style: solid;
+          border-color: #BC8E19;
+          color: #7C630B;
+        }
 				
 				.btn{
 				  text-align: center;
@@ -188,19 +205,17 @@ function PersonalSetting() {
           height: 20px;
           color: #7D7B7B;
           border-radius: 6px;
-      }
-				}
-				
+        }
+
         .left {float:left;
         padding: 10px;
-          
         }
+
         .right {
-        float:left;
-        padding: 10px;
+          float:left;
+          padding: 10px;
         }
-          `}
-          
+        `}  
       </style>
     </div>
   )

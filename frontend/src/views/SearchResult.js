@@ -106,7 +106,7 @@ function SearchResult({location}) {
         .result-wrapper {
           background: rgba(252, 209, 127, 0.26);
           display: grid;
-          grid-template-columns: 1fr 1fr 1fr 1fr;
+          grid-template-columns: 1fr 1fr 1fr;
           padding: 50px 65px 25px 65px;
           min-height: calc(100vh - 400px);
         }
@@ -143,6 +143,18 @@ function SearchResult({location}) {
         .nav-button:hover {
           background-color: var(--c-brown);
           color: white;
+        }
+
+        @media(max-width: 980px){
+          .result-wrapper{
+            grid-template-columns: 1fr 1fr;
+          }
+        }
+
+        @media(max-width: 700px){
+          .result-wrapper{
+            grid-template-columns: 1fr;
+          }
         }
         `}
       </style>
