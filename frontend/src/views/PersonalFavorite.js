@@ -45,7 +45,7 @@ function PersonalFavorite() {
 
       <div className='recipe-container'>
         {favoriteRecipes[0]
-          ? favoriteRecipes.map(recipe => <RecipeCard recipe={recipe} key={recipe.id} fetchRecipes={getPersonalFavorites} />)
+          ? favoriteRecipes.map(recipe => <RecipeCard recipe={recipe} key={recipe.id} fetchRecipes={getPersonalFavorites} matchPerfect={false}/>)
           : <p>You haven't added any favorite recipe yet!</p>
           }
       </div>

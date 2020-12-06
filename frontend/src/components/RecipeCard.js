@@ -1,9 +1,10 @@
-import React, {useContext} from 'react'
+import React, {useContext, useEffect} from 'react'
 import FavoriteImg from '../components/FavoriteImg'
+import Star from '../images/perfect-match-star.png'
 import {Link} from 'react-router-dom'
 import {UserInfo} from './UserContext'
 
-function RecipeCard({recipe, fetchRecipes}) {
+function RecipeCard({recipe, fetchRecipes, matchPerfect}) {
   const userInfo = useContext(UserInfo)
   
   return (
@@ -26,6 +27,16 @@ function RecipeCard({recipe, fetchRecipes}) {
             height={30}
           />
         </div>
+
+        {
+         recipe.total == recipe.total_matched && matchPerfect
+          ? <div className='match-container'>
+              <img className='match-star' src={Star}/>
+              <p className='match-text'>Perfect Match</p>
+              <img className='match-star' src={Star}/>
+            </div>
+          : <div/>
+        }
       </div>
       <style jsx='true'>
         {`        
@@ -61,9 +72,27 @@ function RecipeCard({recipe, fetchRecipes}) {
           display:inline-block;
         }
 
+        .match-container {
+          text-align: center;
+        }
+
         .favorite-heart {
           float: right;
-          
+        }
+
+        .match-star {
+          height: 25px;
+          width: 25px
+          display:inline-block;
+        }
+
+        .match-text{
+          display:inline-block;
+          margin: 0px;
+          font-family: Sedan;
+          color: rgba(108, 108, 108, 1);
+          font-size: 15px;
+          padding: 0px 5px 0px 5px;
         }
 
         .recipe-name {

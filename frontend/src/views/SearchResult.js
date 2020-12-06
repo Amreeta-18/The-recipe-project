@@ -84,7 +84,7 @@ function SearchResult({location}) {
       {/* we need "recipes &&" to not show anything since recipes will recieve data later (in useEffect) */}
       
       <div className='result-wrapper'>
-        {pageRecipes && pageRecipes.map(recipe => <RecipeCard recipe={recipe} key={recipe.id} fetchRecipes={fetchRecipes} />)}
+        {pageRecipes && pageRecipes.map(recipe => <RecipeCard recipe={recipe} key={recipe.id} fetchRecipes={fetchRecipes} matchPerfect={true} />)}
       </div>
     
       <div className='button-container'>
