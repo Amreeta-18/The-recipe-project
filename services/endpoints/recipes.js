@@ -43,12 +43,7 @@ router.route('/findByIngredients').all(jsonParser).post(async (req, res) => {
              rc.name,
              rc.imgurl,
              COALESCE(COUNT(i.id), 0) + COALESCE(MAX(i.score), 0) AS total,
-             COALESCE((SELECT COUNT(*) FROM recipe_ingredients WHERE recipe_id = rc.id), 0) - COALESCE(COUNT(i.id), 0) AS total_matched,
-             ((
-               COALESCE((SELECT COUNT(*) FROM recipe_ingredients WHERE recipe_id = rc.id), 0) - COALESCE(COUNT(i.score), 0)
-               )*100) / (
-                 COALESCE(COUNT(i.score), 0) + COALESCE(MAX(i.score), 0)
-                 ) AS ratio
+             COALESCE((SELECT COUNT(*) FROM recipe_ingredients WHERE recipe_id = rc.id), 0) - COALESCE(COUNT(i.id), 0) AS total_matched
       FROM (
         SELECT ir.recipe_id
         FROM recipe_ingredients AS ir
@@ -63,7 +58,7 @@ router.route('/findByIngredients').all(jsonParser).post(async (req, res) => {
       LEFT JOIN ingredients AS i ON i.id = ir.ingredient_id
       JOIN recipes AS rc ON rc.id = r.recipe_id
       GROUP BY rc.id
-      ORDER BY ratio DESC
+      ORDER BY total_matched DESC, total ASC
       `, [ingredientIds])
       // ORDER BY total_matched DESC, total ASC
       }
