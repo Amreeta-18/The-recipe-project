@@ -27,8 +27,6 @@ function RecipeCard({recipe, fetchRecipes, matchPerfect}) {
             height={30}
           />
         </div>
-
-        {console.log(recipe)}
         {
          recipe.total === '0' && matchPerfect
           ? <div className='match-container'>
