@@ -28,8 +28,9 @@ function RecipeCard({recipe, fetchRecipes, matchPerfect}) {
           />
         </div>
 
+        {console.log(recipe)}
         {
-         recipe.total == recipe.total_matched && matchPerfect
+         recipe.total === '0' && matchPerfect
           ? <div className='match-container'>
               <img className='match-star' src={Star}/>
               <p className='match-text'>Perfect Match</p>
