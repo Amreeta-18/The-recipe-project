@@ -324,7 +324,7 @@ def helper_log_in(driver, message):
 
         # Check if logged in
         test_site(driver, addr_home, message_login_page)
-        if "Hi, no!" in driver.page_source:
+        if "Hi, test!" in driver.page_source:
             print("\tLogin Successful")
         else:
             print("\tLogin Failed")
