@@ -34,8 +34,7 @@ addr_single_recipe_test = "https://sous-chef-recipe.herokuapp.com/SingleRecipeTe
 addr_test = "https://sous-chef-recipe.herokuapp.com/test"
 addr_profile = "https://sous-chef-recipe.herokuapp.com/profile"
 addr_login = "https://sous-chef-recipe.herokuapp.com/login"
-addr_favorite_recipes = "https://sous-chef-recipe.herokuapp.com/favorite_recipes"
-addr_allergens = "https://sous-chef-recipe.herokuapp.com/allergens"
+addr_favorite_recipes = "https://sous-chef-recipe.herokuapp.com/favorite-recipes"
 
 
 # # Test Suite # #
@@ -85,18 +84,12 @@ def main():
     test_footer(driver, message_profile_page)               # Make sure footer is present
     test_profile_page(driver, message_profile_page)         # Test key elements of profile page
 
-    # print("Testing favorite recipes page...")
-    # test_site(driver, addr_favorite_recipes, message_favorite_recipes_page)     # Get favorite recipe page
-    # test_header(driver, message_favorite_recipes_page)                          # Make sure header is present
-    # test_footer(driver, message_favorite_recipes_page)                          # Make sure footer is present
-    # test_favorite_recipes(driver, message_favorite_recipes_page)                # Test key elements of favorites page
-    #
-    # print("Testing allergens page...")
-    # test_site(driver, addr_allergens, message_allergens_page)   # Get allergens page
-    # test_header(driver, message_allergens_page)                 # Make sure header is present
-    # test_footer(driver, message_allergens_page)                 # Make sure footer is present
-    # test_allergens(driver, message_allergens_page)              # Test key elements of allergens page
-    #
+    print("Testing favorite recipes page...")
+    test_site(driver, addr_favorite_recipes, message_favorite_recipes_page)     # Get favorite recipe page
+    test_header(driver, message_favorite_recipes_page)                          # Make sure header is present
+    test_footer(driver, message_favorite_recipes_page)                          # Make sure footer is present
+    test_favorite_recipes(driver, message_favorite_recipes_page)                # Test key elements of favorites page
+
     print("Tests Completed")
 
 
@@ -276,8 +269,8 @@ def helper_personal_page(driver, message):
 
     # Test favorites page
     favorite_button = driver.find_element_by_id("test_personal_page_tabs_favorite_button")
-    favorite_button.click()  # Click logout
-    time.sleep(2)  # Give site time to load results
+    favorite_button.click()  # Click favorites
+    time.sleep(5)  # Give site time to load results
     if "FAVORITE RECIPES" in driver.page_source:
         print("\tFavorites Page Valid")
     else:
@@ -285,9 +278,9 @@ def helper_personal_page(driver, message):
 
     # Test staples page
     preference_button = driver.find_element_by_id("test_personal_page_tabs_preferrence_button")
-    preference_button.click()  # Click logout
-    time.sleep(2)  # Give site time to load results
-    if "Staples" in driver.page_source:
+    preference_button.click()  # Click staples
+    time.sleep(5)  # Give site time to load results
+    if "STAPLES" in driver.page_source:
         print("\tPreference Page Valid")
     else:
         print("\tPreference Page Invalid")
@@ -362,32 +355,15 @@ def helper_log_out(driver, message):
 #   Test returned recipe
 def test_favorite_recipes(driver, message):
     try:
-        personal_button = driver.find_element_by_id("test_favorite_recipes_page_personal_button")
-        favorite_button = driver.find_element_by_id("test_favorite_recipes_page_favorite_button")
-        allergen_button = driver.find_element_by_id("test_favorite_recipes_page_allergen_button")
+        personal_button = driver.find_element_by_id("test_personal_page_tabs_preferrence_button")
+        favorite_button = driver.find_element_by_id("test_personal_page_tabs_favorite_button")
 
-        user_image = driver.find_element_by_id("test_favorite_recipes_page_user_image")
-
-        recipe = driver.find_element_by_id("test_favorite_recipes_page_recipe")
+        time.sleep(5)
+        
+        image = driver.find_element_by_id("test_search_result_recipe_image")
+        recipe = driver.find_element_by_id("test_search_result_recipe_card")
     except selEx.NoSuchElementException as e:
         print("Test Failed: ", message, " Favorite Recipes Page encountered error.\n", e)
-
-
-# Test the allergens page
-#   Assumes user is logged in
-#   Get key elements from page
-def test_allergens(driver, message):
-    try:
-        personal_button = driver.find_element_by_id("test_allergens_page_personal_button")
-        favorite_button = driver.find_element_by_id("test_allergens_page_favorite_button")
-        allergen_button = driver.find_element_by_id("test_allergens_page_allergen_button")
-
-        user_image = driver.find_element_by_id("test_allergens_page_user_image")
-
-        search_allergen = driver.find_element_by_id("test_allergens_page_search_bar")
-        allergen_list = driver.find_element_by_id("test_allergens_page_allergen_list")
-    except selEx.NoSuchElementException as e:
-        print("Test Failed: ", message, " Allergens Page encountered error.\n", e)
 
 
 if __name__ == "__main__":
